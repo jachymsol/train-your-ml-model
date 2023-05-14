@@ -1,5 +1,5 @@
 import train_alpha as train
-import upload_alpha as upload
+import upload_beta as upload
 import yaml
 
 def main():
