@@ -1,23 +1,20 @@
 import train_alpha as train
 import upload_alpha as upload
-import yaml
+import config
 
 def main():
-    with open('config.yaml', 'r') as config_file:
-        config = yaml.safe_load(config_file)
-
     while True:
         cmd = input("Enter Command: ")
         if cmd in ("exit", "quit", "q"):
             return
         elif cmd in ("upload"):
-            upload.upload(config)
+            upload.upload()
         elif cmd in ("evaluate"):
-            train.train_dataset(config)
+            train.train_dataset()
         elif cmd in ("undo"):
-            upload.remove_last_image(config)
+            upload.remove_last_image()
         elif cmd in ("config"):
-            print(config)
+            config.print_config()
         else: 
             # Display help
             print("Available commands: upload, evaluate, quit")

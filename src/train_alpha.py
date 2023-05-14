@@ -4,14 +4,16 @@ import numpy as np
 from pathlib import Path
 from PIL import Image
 
-def train_dataset(config):
-    train_dataset = Path.expanduser(Path(config['train_folder']))
-    test_dataset = Path.expanduser(Path(config['test_folder']))
+from config import get_config
+
+def train_dataset():
+    train_dataset = Path.expanduser(Path(get_config['train_folder']))
+    test_dataset = Path.expanduser(Path(get_config['test_folder']))
 
     datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
     preprocessing_datagen = keras.preprocessing.image.ImageDataGenerator(
         rescale=1./255,
-        preprocessing_function=config['preprocessing']
+        preprocessing_function=get_config['preprocessing']
     )
     enhanced_datagen = keras.preprocessing.image.ImageDataGenerator(
         rescale=1./255,
