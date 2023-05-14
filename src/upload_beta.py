@@ -7,7 +7,7 @@ from kivy.uix.spinner import Spinner
 from kivy.clock import Clock
 import cv2
 
-from .upload_utils import *
+from upload_utils import *
 
 class UploadBox(BoxLayout):
     def __init__(self, config, **kwargs):

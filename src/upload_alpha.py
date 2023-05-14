@@ -2,7 +2,7 @@ import cv2
 import time
 from pathlib import Path
 
-from .upload_utils import *
+from upload_utils import *
 
 def upload(config):
     camera = create_camera()
