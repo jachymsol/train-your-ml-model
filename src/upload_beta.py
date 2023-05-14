@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.graphics.texture import Texture
+from kivy.properties import DictProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
@@ -8,11 +9,11 @@ from kivy.clock import Clock
 import cv2
 
 from upload_utils import *
+from config import *
 
 class UploadBox(BoxLayout):
-    def __init__(self, config, **kwargs):
+    def __init__(self, **kwargs):
         super(UploadBox, self).__init__(**kwargs)
-        self.config = config
         self.orientation = 'vertical'
 
         # Create a widget to display the camera output
@@ -21,8 +22,8 @@ class UploadBox(BoxLayout):
 
         # Create a dropdown to choose the category
         self.category = Spinner(
-            text=config["categories"][0],
-            values=config["categories"]
+            text=get_config["categories"][0],
+            values=get_config["categories"]
         )
         self.add_widget(self.category)
 
@@ -46,7 +47,7 @@ class UploadBox(BoxLayout):
         self.is_capturing = False
         # Take a picture and save it to a file
         image = capture(self.camera)
-        image_path = get_image_file_name(self.config['train_folder'], self.category)
+        image_path = get_image_file_name(get_config['train_folder'], self.category)
         print(image_path)
         save_image(image, image_path)
         release_camera(self.camera)
@@ -61,8 +62,8 @@ class UploadBox(BoxLayout):
         self.img.texture = texture
 
 class UploadApp(App):
-    def build():
+    def build(self):
         return 
 
-def upload(config):
-    UploadApp(config).run()
+def upload():
+    UploadApp().run()
