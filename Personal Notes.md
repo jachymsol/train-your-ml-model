@@ -7,3 +7,8 @@ Cropping is therefore not necessary.
 
 Contrast will need a parameter to tune to recognize black from white.  
 Or I could do a shade analysis automatically? 
+
+## To get more images
+
+Use Keras's ImageDataGenerator??
+- would be an unlockable
