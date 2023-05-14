@@ -21,11 +21,11 @@ class UploadBox(BoxLayout):
         self.add_widget(self.img)
 
         # Create a dropdown to choose the category
-        self.category = Spinner(
+        self.category_spinner = Spinner(
             text=get_config("categories")[0],
             values=get_config("categories")
         )
-        self.add_widget(self.category)
+        self.add_widget(self.category_spinner)
 
         # Create a button to take a picture
         self.button = Button(text='Take Picture', size_hint=(1, 0.2))
@@ -33,7 +33,7 @@ class UploadBox(BoxLayout):
         self.add_widget(self.button)
 
         # Initialize the camera
-        self.capture = create_camera()
+        self.camera = create_camera()
         self.is_capturing = True
         Clock.schedule_interval(self.update, 1.0 / 30.0)
 
@@ -47,11 +47,11 @@ class UploadBox(BoxLayout):
         self.is_capturing = False
         # Take a picture and save it to a file
         image = capture(self.camera)
-        image_path = get_image_file_name(get_config('train_folder'), self.category)
+        image_path = get_image_file_name(get_config('train_folder'), self.category_spinner.text)
         print(image_path)
         save_image(image, image_path)
         release_camera(self.camera)
-        App.get_running_app().exit()
+        App.get_running_app().stop()
     
     def display_frame(self, frame):
         # Convert the frame to an image and display it

@@ -2,6 +2,8 @@ import cv2
 import time
 from pathlib import Path
 
+from utils.config import get_config
+
 def create_camera():
     return cv2.VideoCapture(0)
 
@@ -43,9 +45,9 @@ def get_image_file_name(dataset_path, category):
 def save_image(image, image_path):
     cv2.imwrite(str(image_path), cv2.resize(image, (128, 128)))
 
-def remove_last_image(config):
-    category = get_category_name(config["categories"])
-    folder_path = Path.expanduser(Path(config["train_folder"]) / category)
+def remove_last_image():
+    category = get_category_name(get_config("categories"))
+    folder_path = Path.expanduser(Path(get_config("train_folder")) / category)
     files = [file.name for file in folder_path.glob('im_*.png')]
     files.sort()
     Path.unlink(folder_path / files[-1])
