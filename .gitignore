@@ -1,3 +1,8 @@
+# Cached and pre-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
 .python-version
 .ipynb_checkpoints/**
 datasets/**
