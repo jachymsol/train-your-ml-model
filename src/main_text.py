@@ -1,6 +1,6 @@
 import train_alpha as train
-import upload_alpha as upload
-import config
+import upload_beta as upload
+import utils.config as config
 
 def main():
     while True:

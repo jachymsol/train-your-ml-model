@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 from PIL import Image
 
-from config import get_config
+from utils.config import get_config
 
 def train_dataset():
     train_dataset = Path.expanduser(Path(get_config['train_folder']))
