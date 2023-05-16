@@ -1,6 +1,5 @@
 from kivy.app import App
 from kivy.graphics.texture import Texture
-from kivy.properties import DictProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
