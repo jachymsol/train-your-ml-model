@@ -3,7 +3,8 @@
         size: root.size
         do_default_tab: False
 
-        TrainingDataTab:
+        TabbedPanelItem:
+            TrainingDataTab:
         TabbedPanelItem:
             text: 'Evaluations'
             BoxLayout:
@@ -18,9 +19,10 @@
                     '\\n'.join(("Hello world", "-----------",
                     "You are in the third tab."))
 
-<TrainingDataTab@TabbedPanelItem>:
+<TrainingDataTab>:
     text: 'Training Data'
     BoxLayout:
+        size: root.size
         Splitter: 
             size_hint: .3, 1
             sizable_from: 'right'
@@ -34,7 +36,7 @@
             FileChooserIconView:
                 rootpath: '../datasets'
 
-<UploadPictureFrame@Widget>:
+<UploadPictureFrame>:
     BoxLayout:
         size: root.size
         orientation: 'vertical'

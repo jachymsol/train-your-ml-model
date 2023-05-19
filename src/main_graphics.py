@@ -4,6 +4,12 @@ from kivy.uix.widget import Widget
 
 Builder.load_file("graphics/frame.kv")
 
+class TrainingDataTab(Widget):
+    pass
+
+class UploadPictureFrame(Widget):
+    pass
+
 class TrainYourModelGame(Widget):
     pass
 
