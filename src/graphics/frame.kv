@@ -1,0 +1,67 @@
+<TrainYourModelGame>:
+    size_hint: 1, 1
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    do_default_tab: False
+
+    TabbedPanelItem:
+        text: 'Training Data'
+        BoxLayout:
+            Splitter: 
+                size_hint: .3, 1
+                sizable_from: 'right'
+                strip_size: '5pt'
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label: 
+                        text: 'Upload new photo'
+                        size_hint_y: .3 
+                    Image:
+                    BoxLayout:
+                        size_hint_y: .5
+                        CheckBox:
+                            group: 'categories'
+                            pos_hint: {'center_x': .9}
+                            
+                            canvas.before:
+                                Color:
+                                    rgba: 0, 1, 0, 1
+                                Rectangle:
+                                    # self here refers to the widget i.e FloatLayout
+                                    pos: self.pos
+                                    size: self.size
+                        Label:
+                            text: 'Airplane'
+                    BoxLayout:
+                        size_hint: 1, .5
+                        CheckBox:
+                            group: 'categories'
+                            pos_hint: {'center_x': .9}
+                        Label:
+                            text: 'Basketball'
+                    Button:
+                        text: 'Take picture'
+                    BoxLayout:
+                        Button:
+                            text: 'Retake'
+                        Button:
+                            text: 'Save'
+            BoxLayout:
+                orientation: 'vertical'
+                Image:
+                    source: ''
+                FileChooserIconView:
+                    rootpath: '../datasets'
+    TabbedPanelItem:
+        text: 'Evaluations'
+        BoxLayout:
+            Label:
+                text: 'Second tab content area'
+            Button:
+                text: 'Button that does nothing'
+    TabbedPanelItem:
+        text: 'Upgrades'
+        RstDocument:
+            text:
+                '\\n'.join(("Hello world", "-----------",
+                "You are in the third tab."))
