@@ -51,6 +51,9 @@
             CheckBox:
                 group: 'categories'
                 pos_hint: {'center_x': .9}
+                active: root.is_selected_first_category
+                disabled: root.is_selected_first_category
+                on_press: root.is_selected_first_category = True
                 
                 canvas.before:
                     Color:
@@ -66,12 +69,24 @@
             CheckBox:
                 group: 'categories'
                 pos_hint: {'center_x': .9}
+                active: not root.is_selected_first_category
+                disabled: not root.is_selected_first_category
+                on_press: root.is_selected_first_category = False
             Label:
                 text: 'Basketball'
         Button:
+            id: capture_button
             text: 'Take picture'
+            on_release: root.capture_image()
+            disabled: not root.is_capturing
         BoxLayout:
             Button:
+                id: retake_button
                 text: 'Retake'
+                disabled: root.is_capturing
+                on_release: root.retake_image()
             Button:
+                id: save_button
                 text: 'Save'
+                disabled: root.is_capturing
+                on_release: root.save_image()
