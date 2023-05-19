@@ -32,10 +32,16 @@
         BoxLayout:
             orientation: 'vertical'
             Image:
+                id: file_image
+                stretch_image: True
+                keep_ratio: True
                 source: ''
             FileChooserIconView:
                 id: file_chooser
+                dirselect: False
+                filters: ['*.png']
                 rootpath: '../datasets'
+                on_selection: root.show_selected_file()
 
 <UploadPictureFrame>:
     BoxLayout:

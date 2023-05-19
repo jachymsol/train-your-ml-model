@@ -21,6 +21,10 @@ class TrainingDataTab(Widget):
     def update_file_chooser(self, _):
         self.ids.file_chooser._update_files()
 
+    def show_selected_file(self):
+        if len(self.ids.file_chooser.selection) > 0:
+            self.ids.file_image.source = self.ids.file_chooser.selection[0]
+
 class UploadPictureFrame(Widget):
     is_capturing = BooleanProperty(True)
     is_selected_first_category = BooleanProperty(True)
