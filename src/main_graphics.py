@@ -13,7 +13,13 @@ Builder.load_file("graphics/frame.kv")
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 class TrainingDataTab(Widget):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        Clock.schedule_interval(self.update_file_chooser, 1.0)
+
+    def update_file_chooser(self, _):
+        self.ids.file_chooser._update_files()
 
 class UploadPictureFrame(Widget):
     is_capturing = BooleanProperty(True)
@@ -25,7 +31,7 @@ class UploadPictureFrame(Widget):
         self.camera = create_camera()
         Clock.schedule_interval(self.update_camera, 1.0 / 30)
 
-    def update_camera(self, dt):
+    def update_camera(self, _):
         if self.camera.isOpened() and self.is_capturing:
             self.image = capture(self.camera)
             self.update_camera_image()
