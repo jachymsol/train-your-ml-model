@@ -30,12 +30,36 @@
             UploadPictureFrame:
 
         BoxLayout:
+            id: image_frame
             orientation: 'vertical'
-            Image:
-                id: file_image
-                stretch_image: True
-                keep_ratio: True
-                source: ''
+            RelativeLayout:
+                Image:
+                    canvas.before:
+                        Color:
+                            rgba: (.5, .5, .5, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    id: file_image
+                    color: 'grey'
+                    allow_stretch: True
+                    keep_ratio: True
+                    source: ''
+                Button:
+                    id: delete_image_button
+                    pos_hint: {'bottom': 1, 'right': 1}
+                    size_hint: None, None
+                    size: 100, 100
+                    text: 'Delete'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: 470, 100
+                    pos_hint: {'top': 1, 'right': 1}
+                    Label:
+                        text: 'Show tranformations'
+                    Switch:
+                        id: show_transformed_image_button
             FileChooserIconView:
                 id: file_chooser
                 dirselect: False

@@ -24,6 +24,7 @@ class TrainingDataTab(Widget):
     def show_selected_file(self):
         if len(self.ids.file_chooser.selection) > 0:
             self.ids.file_image.source = self.ids.file_chooser.selection[0]
+        self.ids.delete_image_button.disabled = False
 
 class UploadPictureFrame(Widget):
     is_capturing = BooleanProperty(True)
