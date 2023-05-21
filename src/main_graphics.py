@@ -3,7 +3,7 @@ from kivy.lang.builder import Builder
 from kivy.uix.widget import Widget
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
-from kivy.properties import BooleanProperty, StringProperty
+from kivy.properties import BooleanProperty
 from kivy.config import Config
 
 from utils.upload_utils import *
@@ -21,10 +21,15 @@ class TrainingDataTab(Widget):
     def update_file_chooser(self, _):
         self.ids.file_chooser._update_files()
 
-    def show_selected_file(self):
+    def show_selected_image(self):
         if len(self.ids.file_chooser.selection) > 0:
             self.ids.file_image.source = self.ids.file_chooser.selection[0]
         self.ids.delete_image_button.disabled = False
+
+    def delete_selected_image(self):
+        remove_image(self.ids.file_image.source)
+        self.ids.file_image.source = ''
+        self.ids.delete_image_button.disabled = True
 
 class UploadPictureFrame(Widget):
     is_capturing = BooleanProperty(True)

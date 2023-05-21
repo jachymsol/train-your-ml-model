@@ -45,6 +45,9 @@ def get_image_file_name(dataset_path, category):
 def save_image(image, image_path):
     cv2.imwrite(str(image_path), cv2.resize(image, (128, 128)))
 
+def remove_image(image_path):
+    Path.unlink(Path(image_path))
+
 def remove_last_image():
     category = get_category_name(get_config("categories"))
     folder_path = Path.expanduser(Path(get_config("train_folder")) / category)
