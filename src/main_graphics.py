@@ -7,12 +7,15 @@ from kivy.properties import BooleanProperty
 from kivy.config import Config
 
 from utils.upload_utils import *
+from utils.transformations import *
 from utils.config import get_config
 
 Builder.load_file("graphics/frame.kv")
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 class TrainingDataTab(Widget):
+    show_transformations = BooleanProperty(False)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -48,12 +51,13 @@ class UploadPictureFrame(Widget):
 
     def update_camera_image(self):
         # Convert image into Kivy Texture
-        buf = cv2.flip(self.image, 0).tobytes()
+        new_image = full_transform(self.image)
+        buf = new_image.tobytes()
         texture = Texture.create(
             size=(self.image.shape[1], self.image.shape[0]),
-            colorfmt='bgr'
+            colorfmt='luminance'
         )
-        texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
+        texture.blit_buffer(buf, colorfmt='luminance', bufferfmt='ubyte')
         self.ids.camera_image.texture = texture
     
     def capture_image(self):
