@@ -28,6 +28,7 @@
             sizable_from: 'right'
             strip_size: '5pt'
             UploadPictureFrame:
+                parent_root: root
 
         BoxLayout:
             id: image_frame
@@ -62,7 +63,6 @@
                         text: 'Show tranformations'
                     Switch:
                         id: show_transformations_switch
-                        active: root.show_transformations
             FileChooserIconView:
                 id: file_chooser
                 dirselect: False

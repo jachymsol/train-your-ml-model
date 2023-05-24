@@ -14,8 +14,6 @@ Builder.load_file("graphics/frame.kv")
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 class TrainingDataTab(Widget):
-    show_transformations = BooleanProperty(False)
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -40,7 +38,7 @@ class UploadPictureFrame(Widget):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
         self.camera = create_camera()
         Clock.schedule_interval(self.update_camera, 1.0 / 30)
 
@@ -51,13 +49,18 @@ class UploadPictureFrame(Widget):
 
     def update_camera_image(self):
         # Convert image into Kivy Texture
-        new_image = full_transform(self.image)
-        buf = new_image.tobytes()
+        if self.parent_root.ids.show_transformations_switch.active:
+            display_image = full_transform(self.image)
+            color_fmt = 'luminance'
+        else: 
+            display_image = flip(self.image)
+            color_fmt = 'bgr'
+        buf = display_image.tobytes()
         texture = Texture.create(
             size=(self.image.shape[1], self.image.shape[0]),
-            colorfmt='luminance'
+            colorfmt=color_fmt,
         )
-        texture.blit_buffer(buf, colorfmt='luminance', bufferfmt='ubyte')
+        texture.blit_buffer(buf, colorfmt=color_fmt, bufferfmt='ubyte')
         self.ids.camera_image.texture = texture
     
     def capture_image(self):
