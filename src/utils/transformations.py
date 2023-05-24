@@ -20,5 +20,10 @@ def max_contrast(image_array):
     enhanced_im = enhancer.enhance(50)
     return np.array(enhanced_im)
 
+def resize(image_array):
+    image = Image.fromarray(image_array)
+    resized_im = image.resize((32, 32))
+    return np.array(resized_im)
+
 def full_transform(image_array):
-    return compose(max_contrast, compose(to_grayscale, flip))(image_array)
+    return compose(compose(max_contrast, resize), compose(to_grayscale, flip))(image_array)

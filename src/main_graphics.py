@@ -57,7 +57,7 @@ class UploadPictureFrame(Widget):
             color_fmt = 'bgr'
         buf = display_image.tobytes()
         texture = Texture.create(
-            size=(self.image.shape[1], self.image.shape[0]),
+            size=(display_image.shape[1], display_image.shape[0]),
             colorfmt=color_fmt,
         )
         texture.blit_buffer(buf, colorfmt=color_fmt, bufferfmt='ubyte')
