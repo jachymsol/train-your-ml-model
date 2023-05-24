@@ -53,7 +53,7 @@ class UploadPictureFrame(Widget):
             display_image = full_transform(self.image)
             color_fmt = 'luminance'
         else: 
-            display_image = flip(self.image)
+            display_image = do_transforms(self.image, flip)
             color_fmt = 'bgr'
         buf = display_image.tobytes()
         texture = Texture.create(
