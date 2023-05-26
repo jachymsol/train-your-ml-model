@@ -80,7 +80,7 @@ class UploadPictureFrame(Widget):
 class UpgradesTab(Widget):
     pass
 
-class CheckmarkLabel(Widget):
+class PurchasableUpgrade(Widget):
     pass
 
 class TrainYourModelGame(Widget):
