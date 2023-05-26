@@ -130,20 +130,37 @@
         BoxLayout:
             orientation: 'vertical'
             Label:
-                text: "Purchased Updates"
+                text: "Permanent Upgrades"
+                bold: True
                 size_hint: 1, None
-                height: 100
-            CheckmarkLabel:
+                height: 150
+            PurchasableUpgrade:
                 label_text: "Grayscale"
-            CheckmarkLabel:
+            PurchasableUpgrade:
                 label_text: "Max Contrast"
             Label:
                 text: ""
-        Button:
-            text: 'Unnecessary button'
+        Widget:
+            size_hint: None, 1
+            width: 5
+            canvas.before:
+                Color:
+                    rgba: (1,1,1,1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "One Time Upgrades"
+                bold: True
+                size_hint: 1, None
+                height: 150
+            Label:
+                
 
 
-<CheckmarkLabel>:
+<PurchasableUpgrade>:
     label_text: ""
     size_hint: 1, None
     height: 100
@@ -151,20 +168,18 @@
         width: root.width
         pos: root.pos
         orientation: 'horizontal'
-        Label:
-            size_hint: 0.3, 1
-        CheckBox:
-            size_hint: None, None
-            width: 75
+        padding: 50, 5
+        Switch:
+            size_hint: None, 1
+            width: 250
             pos_hint: {'center_x': .5, 'center_y': .5}
-            canvas.before:
-                Color:
-                    rgba: (1, 0, 0, 1)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+            disabled: True
         Label:
             text: root.label_text
             text_size: self.size
             halign: 'left'
             valign: 'center'
+        Button:
+            size_hint: None, 1
+            width: 200
+            text: "Buy"
