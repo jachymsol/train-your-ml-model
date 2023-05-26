@@ -77,6 +77,12 @@ class UploadPictureFrame(Widget):
         save_image(self.image, image_path)
         self.is_capturing = True
 
+class UpgradesTab(Widget):
+    pass
+
+class CheckmarkLabel(Widget):
+    pass
+
 class TrainYourModelGame(Widget):
     pass
 

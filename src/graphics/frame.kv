@@ -15,10 +15,7 @@
                     text: 'Button that does nothing'
         TabbedPanelItem:
             text: 'Upgrades'
-            RstDocument:
-                text:
-                    '\\n'.join(("Hello world", "-----------",
-                    "You are in the third tab."))
+            UpgradesTab:
 
 <TrainingDataTab>:
     BoxLayout:
@@ -125,3 +122,49 @@
                 text: 'Save'
                 disabled: root.is_capturing
                 on_release: root.save_image()
+
+<UpgradesTab>:
+    BoxLayout:
+        size: root.size
+        orientation: 'horizontal'
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Purchased Updates"
+                size_hint: 1, None
+                height: 100
+            CheckmarkLabel:
+                label_text: "Grayscale"
+            CheckmarkLabel:
+                label_text: "Max Contrast"
+            Label:
+                text: ""
+        Button:
+            text: 'Unnecessary button'
+
+
+<CheckmarkLabel>:
+    label_text: ""
+    size_hint: 1, None
+    height: 100
+    BoxLayout:
+        width: root.width
+        pos: root.pos
+        orientation: 'horizontal'
+        Label:
+            size_hint: 0.3, 1
+        CheckBox:
+            size_hint: None, None
+            width: 75
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            canvas.before:
+                Color:
+                    rgba: (1, 0, 0, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        Label:
+            text: root.label_text
+            text_size: self.size
+            halign: 'left'
+            valign: 'center'
