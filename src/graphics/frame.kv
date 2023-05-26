@@ -20,7 +20,7 @@
 <TrainingDataTab>:
     BoxLayout:
         size: root.size
-        Splitter: 
+        Splitter:
             size_hint: .3, 1
             sizable_from: 'right'
             strip_size: '5pt'
@@ -143,13 +143,12 @@
             PurchasableUpgrade:
                 label_text: "Image Generation"
             Label:
-                text: ""
         Widget:
             size_hint: None, 1
-            width: 5
+            width: 10
             canvas.before:
                 Color:
-                    rgba: (1,1,1,1)
+                    rgba: (0,0,0,1)
                 Rectangle:
                     size: self.size
                     pos: self.pos
@@ -160,6 +159,12 @@
                 bold: True
                 size_hint: 1, None
                 height: 150
+            OneTimeUpgrade:
+                label_text: "Train data to Test dataset"
+            OneTimeUpgrade:
+                label_text: "Test data to Train dataset"
+            OneTimeUpgrade:
+                label_text: "Sabotage"
             Label:
                 
 
@@ -190,3 +195,23 @@
             width: 200
             text: "Buy"
             on_release: root.purchase()
+
+<OneTimeUpgrade>:
+    label_text: ""
+    size_hint: 1, None
+    height: 100
+    BoxLayout:
+        width: root.width
+        pos: root.pos
+        orientation: 'horizontal'
+        padding: 50, 5
+        Label:
+            text: root.label_text
+            text_size: self.size
+            halign: 'left'
+            valign: 'center'
+        Button:
+            id: purchase_button
+            size_hint: None, 1
+            width: 200
+            text: "Buy"

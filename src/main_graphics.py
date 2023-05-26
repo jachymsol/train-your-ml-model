@@ -87,6 +87,9 @@ class PurchasableUpgrade(Widget):
         self.is_purchased = True
         self.ids.purchase_row.remove_widget(self.ids.purchase_button)
 
+class OneTimeUpgrade(Widget):
+    pass
+
 class TrainYourModelGame(Widget):
     pass
 
