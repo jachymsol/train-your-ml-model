@@ -127,6 +127,7 @@
     BoxLayout:
         size: root.size
         orientation: 'horizontal'
+        VerticalSeparator:
         BoxLayout:
             orientation: 'vertical'
             Label:
@@ -143,15 +144,7 @@
             PurchasableUpgrade:
                 label_text: "Image Generation"
             Label:
-        Widget:
-            size_hint: None, 1
-            width: 10
-            canvas.before:
-                Color:
-                    rgba: (0,0,0,1)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+        VerticalSeparator:
         BoxLayout:
             orientation: 'vertical'
             Label:
@@ -166,6 +159,7 @@
             OneTimeUpgrade:
                 label_text: "Sabotage"
             Label:
+        VerticalSeparator:
                 
 
 
@@ -215,3 +209,13 @@
             size_hint: None, 1
             width: 200
             text: "Buy"
+
+<VerticalSeparator>:
+    size_hint: None, 1
+    width: 10
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
