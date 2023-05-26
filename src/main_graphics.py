@@ -81,7 +81,11 @@ class UpgradesTab(Widget):
     pass
 
 class PurchasableUpgrade(Widget):
-    pass
+    is_purchased = BooleanProperty(False)
+    
+    def purchase(self):
+        self.is_purchased = True
+        self.ids.purchase_row.remove_widget(self.ids.purchase_button)
 
 class TrainYourModelGame(Widget):
     pass

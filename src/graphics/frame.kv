@@ -165,6 +165,7 @@
     size_hint: 1, None
     height: 100
     BoxLayout:
+        id: purchase_row
         width: root.width
         pos: root.pos
         orientation: 'horizontal'
@@ -173,13 +174,15 @@
             size_hint: None, 1
             width: 250
             pos_hint: {'center_x': .5, 'center_y': .5}
-            disabled: True
+            disabled: not root.is_purchased
         Label:
             text: root.label_text
             text_size: self.size
             halign: 'left'
             valign: 'center'
         Button:
+            id: purchase_button
             size_hint: None, 1
             width: 200
             text: "Buy"
+            on_release: root.purchase()
