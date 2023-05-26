@@ -90,9 +90,6 @@ class PurchasableUpgrade(Widget):
 class OneTimeUpgrade(Widget):
     pass
 
-class VerticalSeparator(Widget):
-    pass
-
 class TrainYourModelGame(Widget):
     pass
 
