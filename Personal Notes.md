@@ -12,3 +12,18 @@ Or I could do a shade analysis automatically?
 
 Use Keras's ImageDataGenerator??
 - would be an unlockable
+
+## ToDoS
+
+- toggle Show Transformations works for saved photos display
+- toggle Show Transformations works on camera display with captured photo
+- toggle Show Transformations uses active upgrades
+    - create state store
+
+- improve Contrast transformation
+
+- model evaluations
+    - prototype
+    - colored vs gray-scale
+
+- server things
