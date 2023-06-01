@@ -72,7 +72,7 @@ class UploadPictureFrame(Widget):
     def save_image(self):
         image_path = get_image_file_name(
             get_config('train_folder'),
-            'airplane' if self.is_selected_first_category else 'basketball'
+            'house' if self.is_selected_first_category else 'animal'
         )
         save_image(self.image, image_path)
         self.is_capturing = True

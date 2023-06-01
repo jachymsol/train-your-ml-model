@@ -6,6 +6,7 @@
         TabbedPanelItem:
             text: 'Training Data'
             TrainingDataTab:
+                app_root: root
         TabbedPanelItem:
             text: 'Evaluations'
             BoxLayout:
@@ -16,6 +17,7 @@
         TabbedPanelItem:
             text: 'Upgrades'
             UpgradesTab:
+                app_root: root
 
 <TrainingDataTab>:
     BoxLayout:
@@ -26,6 +28,7 @@
             strip_size: '5pt'
             UploadPictureFrame:
                 parent_root: root
+                app_root: app_root
 
         BoxLayout:
             id: image_frame
@@ -95,7 +98,7 @@
                         pos: self.pos
                         size: self.size
             Label:
-                text: 'Airplane'
+                text: 'House'
         BoxLayout:
             size_hint: 1, .5
             CheckBox:
@@ -105,7 +108,7 @@
                 disabled: not root.is_selected_first_category
                 on_press: root.is_selected_first_category = False
             Label:
-                text: 'Basketball'
+                text: 'Animal'
         Button:
             id: capture_button
             text: 'Take picture'
