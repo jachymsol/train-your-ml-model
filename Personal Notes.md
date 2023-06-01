@@ -21,6 +21,7 @@ Use Keras's ImageDataGenerator??
     - create state store
 
 - improve Contrast transformation
+    - done in `testing/image_processing_test_2.ipynb`
 
 - model evaluations
     - prototype
