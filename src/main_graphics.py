@@ -6,7 +6,8 @@ from kivy.clock import Clock
 from kivy.properties import BooleanProperty, DictProperty
 from kivy.config import Config
 
-from utils.upload_utils import *
+import utils.camera_utils as camera_utils
+import utils.image_utils as image_utils
 from utils.transformations import *
 from utils.config import get_config
 
@@ -28,7 +29,7 @@ class TrainingDataTab(Widget):
         self.ids.delete_image_button.disabled = False
 
     def delete_selected_image(self):
-        remove_image(self.ids.file_image.source)
+        image_utils.delete_image(self.ids.file_image.source)
         self.ids.file_image.source = ''
         self.ids.delete_image_button.disabled = True
 
@@ -39,12 +40,12 @@ class UploadPictureFrame(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.camera = create_camera()
+        self.camera = camera_utils.create()
         Clock.schedule_interval(self.update_camera, 1.0 / 30)
 
     def update_camera(self, _):
         if self.camera.isOpened() and self.is_capturing:
-            self.image = capture(self.camera)
+            self.image = camera_utils.capture(self.camera)
         self.update_camera_image()
 
     def update_camera_image(self):
@@ -73,11 +74,11 @@ class UploadPictureFrame(Widget):
         self.is_capturing = True
     
     def save_image(self):
-        image_path = get_image_file_name(
+        image_path = image_utils.get_image_file_name(
             get_config('train_folder'),
             get_config('categories')[0] if self.is_selected_first_category else get_config('categories')[1]
         )
-        save_image(self.image, image_path)
+        image_utils.save_image(self.image, image_path)
         self.is_capturing = True
 
 class UpgradesTab(Widget):
