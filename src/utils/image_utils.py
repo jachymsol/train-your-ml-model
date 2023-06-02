@@ -33,6 +33,12 @@ def convert_to_kivy_texture(image, colored=True):
     texture.blit_buffer(buf, colorfmt=color_fmt, bufferfmt='ubyte')
     return texture
 
+def transform_and_display(image, canvas, transforms):
+        display_image = transform(image, transforms)
+
+        texture = convert_to_kivy_texture(display_image, 'grayscale' not in transforms)
+        canvas.texture = texture
+
 def get_next_filename(dataset_path, category):
     folder_path = Path.expanduser(Path(dataset_path) / category)
     current_filenames = [file.name for file in folder_path.glob('im_*.png')]
@@ -43,6 +49,9 @@ def get_next_filename(dataset_path, category):
         last_number = -1
     new_filename = f"im_{str(last_number+1).zfill(6)}.png"
     return folder_path / new_filename
+
+def load(image_path):
+    return cv2.imread(image_path)
 
 def save(image, image_path):
     cv2.imwrite(str(image_path), cv2.resize(image, (128, 128)))

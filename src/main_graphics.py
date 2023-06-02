@@ -24,12 +24,16 @@ class TrainingDataTab(Widget):
 
     def show_selected_image(self):
         if len(self.ids.file_chooser.selection) > 0:
-            self.ids.file_image.source = self.ids.file_chooser.selection[0]
+            image = image_utils.load(self.ids.file_chooser.selection[0])
+            transforms = (self.app_root.state['active_upgrades'] 
+                        if self.ids.show_transformations_switch.active 
+                        else [])
+            image_utils.transform_and_display(image, self.ids.file_image, transforms)
         self.ids.delete_image_button.disabled = False
 
     def delete_selected_image(self):
         image_utils.delete(self.ids.file_image.source)
-        self.ids.file_image.source = ''
+        self.ids.file_image.texture = None
         self.ids.delete_image_button.disabled = True
 
 class UploadImageFrame(Widget):
