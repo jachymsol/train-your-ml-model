@@ -27,7 +27,7 @@
             size_hint: .3, 1
             sizable_from: 'right'
             strip_size: '5pt'
-            UploadPictureFrame:
+            UploadImageFrame:
                 parent_root: root
                 app_root: root.app_root
 
@@ -71,7 +71,7 @@
                 rootpath: '../datasets'
                 on_selection: root.show_selected_image()
 
-<UploadPictureFrame>:
+<UploadImageFrame>:
     BoxLayout:
         size: root.size
         orientation: 'vertical'

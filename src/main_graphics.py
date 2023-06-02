@@ -17,7 +17,7 @@ class TrainingDataTab(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        Clock.schedule_interval(self.update_file_chooser, 1.0)
+        Clock.schedule_interval(self.update_file_chooser, 5.0)
 
     def update_file_chooser(self, _):
         self.ids.file_chooser._update_files()
@@ -32,7 +32,7 @@ class TrainingDataTab(Widget):
         self.ids.file_image.source = ''
         self.ids.delete_image_button.disabled = True
 
-class UploadPictureFrame(Widget):
+class UploadImageFrame(Widget):
     is_capturing = BooleanProperty(True)
     is_selected_first_category = BooleanProperty(True)
 
@@ -46,14 +46,10 @@ class UploadPictureFrame(Widget):
         if self.camera.isOpened() and self.is_capturing:
             self.image = camera_utils.capture(self.camera)
         
-        if self.parent_root.ids.show_transformations_switch.active:
-            transforms = self.app_root.state['active_upgrades']
-        else:
-            transforms = []
-        display_image = image_utils.transform(self.image, transforms)
-
-        texture = image_utils.convert_to_kivy_texture(display_image, 'grayscale' not in transforms)
-        self.ids.camera_image.texture = texture
+        transforms = (self.app_root.state['active_upgrades'] 
+                      if self.parent_root.ids.show_transformations_switch.active 
+                      else [])
+        image_utils.transform_and_display(self.image, self.ids.camera_image, transforms)
     
     def capture_image(self):
         self.is_capturing = False
