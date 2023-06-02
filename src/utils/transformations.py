@@ -40,13 +40,12 @@ def resize_transform(image_array):
 def full_transform(image_array):
     return do_transforms(image_array, flip, to_grayscale, resize, max_contrast)
 
-def smart_transform(image_array, store):
+def transform_with_active_upgrades(image_array, app_state):
     transformations = [flip]
-    print(store.exists('resize'))
-    if store.exists('to_grayscale') and store.get('to_grayscale'):
+    if 'grayscale' in app_state:
         transformations.append(to_grayscale)
-    if store.exists('resize') and store.get('resize'):
+    if 'resize' in app_state:
         transformations.append(resize)
-    if store.exists('max_contrast') and store.get('max_contrast'):
+    if 'contrast' in app_state:
         transformations.append(max_contrast)
     return do_transforms(image_array, *transformations)

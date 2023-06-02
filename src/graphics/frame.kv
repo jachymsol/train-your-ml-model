@@ -142,15 +142,19 @@
                 height: 150
             PurchasableUpgrade:
                 app_root: root.app_root
+                upgrade_id: "resize"
                 label_text: "Resize to 32x32"
             PurchasableUpgrade:
                 app_root: root.app_root
+                upgrade_id: "grayscale"
                 label_text: "Grayscale"
             PurchasableUpgrade:
                 app_root: root.app_root
+                upgrade_id: "contrast"
                 label_text: "Max Contrast"
             PurchasableUpgrade:
                 app_root: root.app_root
+                upgrade_id: "image_generation"
                 label_text: "Image Generation"
             Label:
         VerticalSeparator:
@@ -183,10 +187,12 @@
         orientation: 'horizontal'
         padding: 50, 5
         Switch:
+            id: active_switch
             size_hint: None, 1
             width: 250
             pos_hint: {'center_x': .5, 'center_y': .5}
             disabled: not root.is_purchased
+            on_touch_up: root.update_active_state()
         Label:
             text: root.label_text
             text_size: self.size

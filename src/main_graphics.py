@@ -45,13 +45,16 @@ class UploadPictureFrame(Widget):
     def update_camera(self, _):
         if self.camera.isOpened() and self.is_capturing:
             self.image = capture(self.camera)
-            self.update_camera_image()
+        self.update_camera_image()
 
     def update_camera_image(self):
         # Convert image into Kivy Texture
         if self.parent_root.ids.show_transformations_switch.active:
-            display_image = full_transform(self.image)
-            color_fmt = 'luminance'
+            display_image = transform_with_active_upgrades(self.image, self.app_root.state['active_upgrades'])
+            if 'grayscale' in self.app_root.state['active_upgrades']:
+                color_fmt = 'luminance'
+            else: 
+                color_fmt = 'bgr'
         else: 
             display_image = do_transforms(self.image, flip)
             color_fmt = 'bgr'
@@ -72,7 +75,7 @@ class UploadPictureFrame(Widget):
     def save_image(self):
         image_path = get_image_file_name(
             get_config('train_folder'),
-            'house' if self.is_selected_first_category else 'animal'
+            get_config('categories')[0] if self.is_selected_first_category else get_config('categories')[1]
         )
         save_image(self.image, image_path)
         self.is_capturing = True
@@ -87,15 +90,18 @@ class PurchasableUpgrade(Widget):
         self.is_purchased = True
         self.ids.purchase_row.remove_widget(self.ids.purchase_button)
 
+    def update_active_state(self):
+        if self.ids.active_switch.active:
+            self.app_root.state['active_upgrades'].add(self.upgrade_id)
+        else:
+            self.app_root.state['active_upgrades'].discard(self.upgrade_id)
+
 class OneTimeUpgrade(Widget):
     pass
 
 class TrainYourModelGame(Widget):
     state = DictProperty({
-        'grayscale_upgrade_active': False,
-        'resize_upgrade_active': False,
-        'contrast_upgrade_active': False,
-        'image_generation_upgrade_active': False
+        'active_upgrades': set()
     })
 
 class TrainYourModelApp(App):
