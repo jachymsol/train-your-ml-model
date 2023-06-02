@@ -3,7 +3,7 @@ from kivy.lang.builder import Builder
 from kivy.uix.widget import Widget
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, DictProperty
 from kivy.config import Config
 
 from utils.upload_utils import *
@@ -91,7 +91,12 @@ class OneTimeUpgrade(Widget):
     pass
 
 class TrainYourModelGame(Widget):
-    pass
+    state = DictProperty({
+        'grayscale_upgrade_active': False,
+        'resize_upgrade_active': False,
+        'contrast_upgrade_active': False,
+        'image_generation_upgrade_active': False
+    })
 
 class TrainYourModelApp(App):
     def build(self):
