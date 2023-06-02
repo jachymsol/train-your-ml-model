@@ -1,5 +1,6 @@
 import cv2
 from pathlib import Path
+from kivy.graphics.texture import Texture
 
 from utils.config import get_config
 from utils.transformations import do_transforms, Transformations
@@ -20,6 +21,17 @@ def transform(image, transforms):
     if 'contrast' in transforms:
         transformations.append(Transformations['contrast'])
     return do_transforms(image, *transformations)
+
+def convert_to_kivy_texture(image, colored=True):
+    color_fmt = 'bgr' if colored else 'luminance'
+
+    buf = image.tobytes()
+    texture = Texture.create(
+        size=(image.shape[1], image.shape[0]),
+        colorfmt=color_fmt,
+    )
+    texture.blit_buffer(buf, colorfmt=color_fmt, bufferfmt='ubyte')
+    return texture
 
 def get_next_filename(dataset_path, category):
     folder_path = Path.expanduser(Path(dataset_path) / category)

@@ -45,26 +45,14 @@ class UploadPictureFrame(Widget):
     def update_camera(self, _):
         if self.camera.isOpened() and self.is_capturing:
             self.image = camera_utils.capture(self.camera)
-        self.update_camera_image()
-
-    def update_camera_image(self):
-        # Convert image into Kivy Texture
+        
         if self.parent_root.ids.show_transformations_switch.active:
             transforms = self.app_root.state['active_upgrades']
         else:
             transforms = []
-        if 'grayscale' in transforms:
-            color_fmt = 'luminance'
-        else: 
-            color_fmt = 'bgr'
-
         display_image = image_utils.transform(self.image, transforms)
-        buf = display_image.tobytes()
-        texture = Texture.create(
-            size=(display_image.shape[1], display_image.shape[0]),
-            colorfmt=color_fmt,
-        )
-        texture.blit_buffer(buf, colorfmt=color_fmt, bufferfmt='ubyte')
+
+        texture = image_utils.convert_to_kivy_texture(display_image, 'grayscale' not in transforms)
         self.ids.camera_image.texture = texture
     
     def capture_image(self):
