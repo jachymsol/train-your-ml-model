@@ -8,7 +8,6 @@ from kivy.config import Config
 
 import utils.camera_utils as camera_utils
 import utils.image_utils as image_utils
-from utils.transformations import *
 from utils.config import get_config
 
 Builder.load_file("graphics/frame.kv")
@@ -29,7 +28,7 @@ class TrainingDataTab(Widget):
         self.ids.delete_image_button.disabled = False
 
     def delete_selected_image(self):
-        image_utils.delete_image(self.ids.file_image.source)
+        image_utils.delete(self.ids.file_image.source)
         self.ids.file_image.source = ''
         self.ids.delete_image_button.disabled = True
 
@@ -51,14 +50,15 @@ class UploadPictureFrame(Widget):
     def update_camera_image(self):
         # Convert image into Kivy Texture
         if self.parent_root.ids.show_transformations_switch.active:
-            display_image = transform_with_active_upgrades(self.image, self.app_root.state['active_upgrades'])
-            if 'grayscale' in self.app_root.state['active_upgrades']:
-                color_fmt = 'luminance'
-            else: 
-                color_fmt = 'bgr'
+            transforms = self.app_root.state['active_upgrades']
+        else:
+            transforms = []
+        if 'grayscale' in transforms:
+            color_fmt = 'luminance'
         else: 
-            display_image = do_transforms(self.image, flip)
             color_fmt = 'bgr'
+
+        display_image = image_utils.transform(self.image, transforms)
         buf = display_image.tobytes()
         texture = Texture.create(
             size=(display_image.shape[1], display_image.shape[0]),
@@ -74,11 +74,11 @@ class UploadPictureFrame(Widget):
         self.is_capturing = True
     
     def save_image(self):
-        image_path = image_utils.get_image_file_name(
+        image_path = image_utils.get_file_name(
             get_config('train_folder'),
             get_config('categories')[0] if self.is_selected_first_category else get_config('categories')[1]
         )
-        image_utils.save_image(self.image, image_path)
+        image_utils.save(self.image, image_path)
         self.is_capturing = True
 
 class UpgradesTab(Widget):
@@ -90,6 +90,8 @@ class PurchasableUpgrade(Widget):
     def purchase(self):
         self.is_purchased = True
         self.ids.purchase_row.remove_widget(self.ids.purchase_button)
+        self.ids.active_switch.active = True
+        self.update_active_state()
 
     def update_active_state(self):
         if self.ids.active_switch.active:

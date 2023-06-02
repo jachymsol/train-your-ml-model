@@ -2,15 +2,26 @@ import cv2
 from pathlib import Path
 
 from utils.config import get_config
+from utils.transformations import do_transforms, Transformations
 
-def crop_to_square(frame):
-    h, w = frame.shape[:2]
+def crop_to_square(image):
+    h, w = image.shape[:2]
     min_dim = min(h, w)
     start_x = (w - min_dim) // 2
     start_y = (h - min_dim) // 2
-    return frame[start_y:start_y+min_dim, start_x:start_x+min_dim]
+    return image[start_y:start_y+min_dim, start_x:start_x+min_dim]
 
-def get_next_image_filename(dataset_path, category):
+def transform(image, transforms):
+    transformations = [Transformations['flip']]
+    if 'grayscale' in transforms:
+        transformations.append(Transformations['grayscale'])
+    if 'resize' in transforms:
+        transformations.append(Transformations['resize'])
+    if 'contrast' in transforms:
+        transformations.append(Transformations['contrast'])
+    return do_transforms(image, *transformations)
+
+def get_next_filename(dataset_path, category):
     folder_path = Path.expanduser(Path(dataset_path) / category)
     current_filenames = [file.name for file in folder_path.glob('im_*.png')]
     current_filenames.sort()
@@ -21,8 +32,8 @@ def get_next_image_filename(dataset_path, category):
     new_filename = f"im_{str(last_number+1).zfill(6)}.png"
     return folder_path / new_filename
 
-def save_image(image, image_path):
+def save(image, image_path):
     cv2.imwrite(str(image_path), cv2.resize(image, (128, 128)))
 
-def delete_image(image_path):
+def delete(image_path):
     Path.unlink(Path(image_path))
