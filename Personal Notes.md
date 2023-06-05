@@ -24,7 +24,10 @@ Use Keras's ImageDataGenerator??
     - done in `testing/image_processing_test_2.ipynb`
 
 - model evaluations
+    - GUI
     - prototype
     - colored vs gray-scale
 
 - server things
+
+- logging
