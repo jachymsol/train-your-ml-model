@@ -9,11 +9,8 @@
                 app_root: root
         TabbedPanelItem:
             text: 'Evaluations'
-            BoxLayout:
-                Label:
-                    text: 'Second tab content area'
-                Button:
-                    text: 'Button that does nothing'
+            EvaluationsTab:
+                app_root: root
         TabbedPanelItem:
             text: 'Upgrades'
             UpgradesTab:
@@ -126,6 +123,17 @@
                 text: 'Save'
                 disabled: root.is_capturing
                 on_release: root.save_image()
+
+<EvaluationsTab>:
+    app_root: None
+    ScrollView:
+        size: root.size
+        do_scroll_x: False
+        do_scroll_y: True
+        Label:
+            size_hint: 1, None
+            height: self.texture_size[1]
+            text: 'really some amazing text\n' * 100
 
 <UpgradesTab>:
     app_root: None

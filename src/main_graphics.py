@@ -69,6 +69,9 @@ class UploadImageFrame(Widget):
         image_utils.save(self.image, image_path)
         self.is_capturing = True
 
+class EvaluationsTab(Widget):
+    pass
+
 class UpgradesTab(Widget):
     pass
 
