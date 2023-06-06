@@ -47,4 +47,11 @@ def create_train_and_evaluate(preprocessing_fn):
 
     test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
     test_generator = create_generator(test_dataset_path, preprocessing_fn)
-    return model.evaluate(test_generator, return_dict=True)
+    test_results = model.evaluate(test_generator, return_dict=True)
+
+    model_info = {
+        'model': model,
+        'samples': train_generator.samples,
+        'accuracy': test_results['accuracy']
+    }
+    return model_info
