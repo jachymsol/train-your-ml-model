@@ -80,11 +80,8 @@ class FileChooserFrame(Widget):
 
 class EvaluationsTab(Widget):
     def new_evaluation(self):
-        model = model_utils.create_model()
-        generator = model_utils.create_generator(image_utils.transform_for_model)
-        model_utils.train(model, generator)
-
-        self.app_root.state['evaluations'].append(model)
+        evaluation = model_utils.create_train_and_evaluate(image_utils.transform_for_model)
+        self.ids.evaluation_results.text += "\nEvaluated with accuracy " + str(evaluation['accuracy'])
 
 class UpgradesTab(Widget):
     pass

@@ -25,23 +25,26 @@ def create_model():
 
     return model
 
-def create_generator(preprocessing_fn=None):
+def create_generator(dataset_path, preprocessing_fn=None):
     datagen = keras.preprocessing.image.ImageDataGenerator(
         rescale=1./255,
         preprocessing_function=preprocessing_fn
     )
 
     return datagen.flow_from_directory(
-        Path.expanduser(Path(get_config('train_folder'))),
+        dataset_path,
         target_size=(128, 128),
         batch_size=32,
         class_mode='binary',
         color_mode='grayscale'
     )
 
-def train(model, data_generator):
-    model.fit(data_generator, epochs=10)
+def create_train_and_evaluate(preprocessing_fn):
+    model = create_model()
+    train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
+    train_generator = create_generator(train_dataset_path, preprocessing_fn)
+    model.fit(train_generator, epochs=10)
 
-def evaluate(model):
-    test_folder = get_config('test_folder')
-    model.evaluate(test_folder)
+    test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
+    test_generator = create_generator(test_dataset_path, preprocessing_fn)
+    return model.evaluate(test_generator, return_dict=True)
