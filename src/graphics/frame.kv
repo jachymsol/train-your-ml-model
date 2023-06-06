@@ -21,7 +21,7 @@
     BoxLayout:
         size: root.size
         Splitter:
-            size_hint: .3, 1
+            size_hint: .47, 1
             sizable_from: 'right'
             strip_size: '5pt'
             UploadImageFrame:
@@ -38,12 +38,13 @@
         Label: 
             text: 'Upload new photo'
             bold: True
-            size_hint_y: .3 
+            size_hint: 1, .5
         Image:
+            size_hint: 1, 2
             id: camera_image
             allow_stretch: True
         BoxLayout:
-            size_hint_y: .5
+            size_hint: 1, .5
             CheckBox:
                 group: 'categories'
                 pos_hint: {'center_x': .9}
@@ -53,7 +54,7 @@
                 
                 canvas.before:
                     Color:
-                        rgba: 0, 1, 0, 1
+                        rgba: .5, .5, .5, 1
                     Rectangle:
                         # self here refers to the widget i.e FloatLayout
                         pos: self.pos
@@ -71,11 +72,13 @@
             Label:
                 text: 'Animal'
         Button:
+            size_hint: 1, .5
             id: capture_button
             text: 'Take picture'
             on_release: root.capture_image()
             disabled: not root.is_capturing
         BoxLayout:
+            size_hint: 1, .5
             Button:
                 id: retake_button
                 text: 'Retake'
@@ -127,7 +130,7 @@
             dirselect: False
             filters: ['*.png']
             rootpath: '../datasets'
-            on_selection: root.show_selected_image()
+            # on_selection: root.show_selected_image()
 
 <EvaluationsTab>:
     app_root: None

@@ -54,6 +54,7 @@ class FileChooserFrame(Widget):
         super().__init__(**kwargs)
 
         Clock.schedule_interval(self.update_file_chooser, 5.0)
+        Clock.schedule_interval(self.update_selected_image, 1./30)
     
     def on_kv_post(self, base_widget):
         self.app_root.state['show_transformations_switch'] = self.ids.show_transformations_switch
@@ -62,7 +63,7 @@ class FileChooserFrame(Widget):
     def update_file_chooser(self, _):
         self.ids.file_chooser._update_files()
 
-    def show_selected_image(self):
+    def update_selected_image(self, _):
         if len(self.ids.file_chooser.selection) > 0:
             image = image_utils.load(self.ids.file_chooser.selection[0])
             transforms = (self.app_root.state['active_upgrades'] 
