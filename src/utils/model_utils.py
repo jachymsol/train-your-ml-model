@@ -1,9 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
-import numpy as np
 from pathlib import Path
 from PIL import Image
-from scipy.signal import find_peaks
 
 from utils.config import get_config
 
@@ -34,16 +32,16 @@ def create_generator(preprocessing_fn=None):
     )
 
     return datagen.flow_from_directory(
-        get_config('train_folder'),
+        Path.expanduser(Path(get_config('train_folder'))),
         target_size=(128, 128),
         batch_size=32,
         class_mode='binary',
         color_mode='grayscale'
     )
 
-def train_model(model, data_generator):
+def train(model, data_generator):
     model.fit(data_generator, epochs=10)
 
-def evaluate_mode(model):
+def evaluate(model):
     test_folder = get_config('test_folder')
     model.evaluate(test_folder)

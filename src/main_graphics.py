@@ -3,11 +3,12 @@ from kivy.lang.builder import Builder
 from kivy.uix.widget import Widget
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
-from kivy.properties import BooleanProperty, DictProperty, ObjectProperty
+from kivy.properties import BooleanProperty, DictProperty
 from kivy.config import Config
 
 import utils.camera_utils as camera_utils
 import utils.image_utils as image_utils
+import utils.model_utils as model_utils
 from utils.config import get_config
 
 Builder.load_file("graphics/frame.kv")
@@ -78,7 +79,12 @@ class FileChooserFrame(Widget):
         self.ids.delete_image_button.disabled = True
 
 class EvaluationsTab(Widget):
-    pass
+    def new_evaluation(self):
+        model = model_utils.create_model()
+        generator = model_utils.create_generator(image_utils.transform_for_model)
+        model_utils.train(model, generator)
+
+        self.app_root.state['evaluations'].append(model)
 
 class UpgradesTab(Widget):
     pass
@@ -104,7 +110,8 @@ class OneTimeUpgrade(Widget):
 class TrainYourModelGame(Widget):
     state = DictProperty({
         'active_upgrades': set(),
-        'show_transformations_switch': None
+        'show_transformations_switch': None,
+        'evaluations': []
     })
 
 class TrainYourModelApp(App):

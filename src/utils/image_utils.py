@@ -2,8 +2,7 @@ import cv2
 from pathlib import Path
 from kivy.graphics.texture import Texture
 
-from utils.config import get_config
-from utils.transformations import do_transforms, Transformations
+from utils.transformations import add_dimension, do_transforms, smart_contrast, Transformations
 
 def crop_to_square(image):
     h, w = image.shape[:2]
@@ -34,10 +33,14 @@ def convert_to_kivy_texture(image, colored=True):
     return texture
 
 def transform_and_display(image, canvas, transforms):
-        display_image = transform(image, transforms)
+    display_image = transform(image, transforms)
 
-        texture = convert_to_kivy_texture(display_image, 'grayscale' not in transforms)
-        canvas.texture = texture
+    texture = convert_to_kivy_texture(display_image, 'grayscale' not in transforms)
+    canvas.texture = texture
+
+def transform_for_model(image):
+    blackwhite = smart_contrast(image)
+    return blackwhite.astype('float32')
 
 def get_next_filename(dataset_path, category):
     folder_path = Path.expanduser(Path(dataset_path) / category)

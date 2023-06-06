@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.signal import find_peaks
 from PIL import Image, ImageEnhance
 
 def flip(image):
@@ -13,6 +14,19 @@ def max_contrast(image):
 
 def resize(image):
     return image.resize((32, 32))
+
+def smart_contrast(image_array):
+    hist, _ = np.histogram(image_array, bins=257, range=(-1, 255))
+    peaks, _ = find_peaks(hist, height=15, width=3, distance=20)
+
+    threshold = np.mean(peaks)
+    return np.vectorize(lambda x: 255 if x > threshold else 0)(image_array)
+    # return np.array([255 if x > threshold else 0 for x in image_array])
+    # return image_array.point(lambda x: 255 if x > threshold else 0)
+
+def add_dimension(image_array):
+    image_array_as_float = np.array(image_array).astype('float32')
+    return np.expand_dims(image_array_as_float, -1)
 
 def do_transforms(image_array, *transforms):
     image = Image.fromarray(image_array)

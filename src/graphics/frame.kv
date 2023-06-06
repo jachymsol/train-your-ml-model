@@ -147,6 +147,7 @@
                 bold: True
             Button:
                 text: 'New evaluation'
+                on_release: root.new_evaluation()
 
         ScrollView:
             do_scroll_x: False
@@ -154,7 +155,7 @@
             Label:
                 size_hint: 1, None
                 height: self.texture_size[1]
-                text: 'This evaluation is just for demonstration\n' * 100
+                text: 'You will see your model evaluations here'
 
 <UpgradesTab>:
     app_root: None
