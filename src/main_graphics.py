@@ -3,7 +3,7 @@ from kivy.lang.builder import Builder
 from kivy.uix.widget import Widget
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
-from kivy.properties import BooleanProperty, DictProperty
+from kivy.properties import BooleanProperty, DictProperty, ObjectProperty
 from kivy.config import Config
 
 import utils.camera_utils as camera_utils
@@ -14,27 +14,7 @@ Builder.load_file("graphics/frame.kv")
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 class TrainingDataTab(Widget):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        Clock.schedule_interval(self.update_file_chooser, 5.0)
-
-    def update_file_chooser(self, _):
-        self.ids.file_chooser._update_files()
-
-    def show_selected_image(self):
-        if len(self.ids.file_chooser.selection) > 0:
-            image = image_utils.load(self.ids.file_chooser.selection[0])
-            transforms = (self.app_root.state['active_upgrades'] 
-                        if self.ids.show_transformations_switch.active 
-                        else [])
-            image_utils.transform_and_display(image, self.ids.file_image, transforms)
-        self.ids.delete_image_button.disabled = False
-
-    def delete_selected_image(self):
-        image_utils.delete(self.ids.file_image.source)
-        self.ids.file_image.texture = None
-        self.ids.delete_image_button.disabled = True
+    pass
 
 class UploadImageFrame(Widget):
     is_capturing = BooleanProperty(True)
@@ -51,7 +31,7 @@ class UploadImageFrame(Widget):
             self.image = camera_utils.capture(self.camera)
         
         transforms = (self.app_root.state['active_upgrades'] 
-                      if self.parent_root.ids.show_transformations_switch.active 
+                      if self.app_root.state['show_transformations_switch'].active
                       else [])
         image_utils.transform_and_display(self.image, self.ids.camera_image, transforms)
     
@@ -68,6 +48,33 @@ class UploadImageFrame(Widget):
         )
         image_utils.save(self.image, image_path)
         self.is_capturing = True
+
+class FileChooserFrame(Widget):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        Clock.schedule_interval(self.update_file_chooser, 5.0)
+    
+    def on_kv_post(self, base_widget):
+        self.app_root.state['show_transformations_switch'] = self.ids.show_transformations_switch
+        return super().on_kv_post(base_widget)
+
+    def update_file_chooser(self, _):
+        self.ids.file_chooser._update_files()
+
+    def show_selected_image(self):
+        if len(self.ids.file_chooser.selection) > 0:
+            image = image_utils.load(self.ids.file_chooser.selection[0])
+            transforms = (self.app_root.state['active_upgrades'] 
+                        if self.app_root.state['show_transformations_switch'].active
+                        else [])
+            image_utils.transform_and_display(image, self.ids.file_image, transforms)
+        self.ids.delete_image_button.disabled = False
+
+    def delete_selected_image(self):
+        image_utils.delete(self.ids.file_image.source)
+        self.ids.file_image.texture = None
+        self.ids.delete_image_button.disabled = True
 
 class EvaluationsTab(Widget):
     pass
@@ -95,7 +102,8 @@ class OneTimeUpgrade(Widget):
 
 class TrainYourModelGame(Widget):
     state = DictProperty({
-        'active_upgrades': set()
+        'active_upgrades': set(),
+        'show_transformations_switch': None
     })
 
 class TrainYourModelApp(App):
