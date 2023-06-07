@@ -15,19 +15,14 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
-- toggle Show Transformations works for saved photos display
-- toggle Show Transformations works on camera display with captured photo
-- toggle Show Transformations uses active upgrades
-    - create state store
-
-- improve Contrast transformation
-    - done in `testing/image_processing_test_2.ipynb`
-
-- model evaluations
-    - GUI
-    - prototype
-    - colored vs gray-scale
-
-- server things
+- evaluation uses upgrades properly
+    - grayscale vs colored
+    - resized (different levels?)
+    - contrast (normal vs smart)
+    - image generation
 
 - logging
+    - save state of app
+
+- one-time upgrades
+    - possibly server things
