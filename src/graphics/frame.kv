@@ -204,6 +204,10 @@
                 app_root: root.app_root
                 upgrade_id: "image_generation"
                 label_text: "Image Generation"
+            PurchasableUpgrade:
+                app_root: root.app_root
+                upgrade_id: "train_test_split"
+                label_text: "Train/Test split"
             Label:
         VerticalSeparator:
         BoxLayout:
@@ -213,6 +217,8 @@
                 bold: True
                 size_hint: 1, None
                 height: 150
+            OneTimeUpgrade:
+                label_text: "Evaluate a model on the Test dataset"
             OneTimeUpgrade:
                 label_text: "Train data to Test dataset"
             OneTimeUpgrade:
