@@ -81,7 +81,21 @@ class FileChooserFrame(Widget):
 class EvaluationsTab(Widget):
     def new_evaluation(self):
         model = model_utils.create_train_and_evaluate(image_utils.transform_for_model)
-        self.ids.evaluation_results.text += f"\nTrained with {model['samples']} images and achieved accuracy {model['accuracy']}"
+        
+        model_index = len(self.app_root.state['evaluations'])
+        self.app_root.state['evaluations'].append(model)
+        
+        evaluation_row = EvaluationRow(app_root=self.app_root, model_index=model_index)
+        self.ids.evaluation_results.add_widget(evaluation_row)
+        self.ids.evaluation_results.height += evaluation_row.height
+
+class EvaluationRow(Widget):
+    def __init__(self, app_root, model_index, **kwargs):
+        super().__init__(**kwargs)
+
+        self.app_root = app_root
+        self.model_index = model_index
+        self.initialized = True
 
 class UpgradesTab(Widget):
     pass

@@ -152,11 +152,33 @@
         ScrollView:
             do_scroll_x: False
             do_scroll_y: True
-            Label:
+            # Label:
+            #     id: evaluation_results
+            #     size_hint: 1, None
+            #     height: self.texture_size[1]
+            #     text: 'You will see your model evaluations here'
+            GridLayout:
                 id: evaluation_results
+                cols: 1
                 size_hint: 1, None
-                height: self.texture_size[1]
-                text: 'You will see your model evaluations here'
+                height: 0
+
+<EvaluationRow>:
+    app_root: None
+    model_index: None
+    initialized: False
+    size_hint: 1, None
+    height: 70
+    BoxLayout:
+        pos: root.pos
+        size: root.size
+        orientation: 'horizontal'
+        Label:
+            text: "Evaluation " + str(root.model_index + 1) + ":" if root.initialized else ""
+        Label:
+            text: str(root.app_root.state['evaluations'][root.model_index]['samples']) + " images" if root.initialized else ""
+        Label:
+            text: "Accuracy: " + str(root.app_root.state['evaluations'][root.model_index]['accuracy']) if root.initialized else ""
 
 <UpgradesTab>:
     app_root: None
