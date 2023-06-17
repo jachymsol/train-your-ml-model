@@ -38,10 +38,6 @@ def transform_and_display(image, canvas, transforms):
     texture = convert_to_kivy_texture(display_image, 'grayscale' not in transforms)
     canvas.texture = texture
 
-def transform_for_model(image):
-    blackwhite = smart_contrast(image)
-    return blackwhite.astype('float32')
-
 def get_next_filename(dataset_path, category):
     folder_path = Path.expanduser(Path(dataset_path) / category)
     current_filenames = [file.name for file in folder_path.glob('im_*.png')]

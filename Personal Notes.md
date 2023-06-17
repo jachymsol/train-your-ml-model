@@ -15,11 +15,12 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
-- evaluation uses upgrades properly
-    - grayscale vs colored
-    - resized (different levels?)
-    - contrast (normal vs smart)
-    - image generation
+- replace max_contrast with smart_contrast
+
+- display model training in progress
+- display active upgrades in a model
+
+- resolve retracing warning
 
 - logging
     - save state of app
