@@ -15,6 +15,10 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
+- implement image_generation
+
+- implement test / train split
+
 - replace max_contrast with smart_contrast
 
 - display model training in progress
