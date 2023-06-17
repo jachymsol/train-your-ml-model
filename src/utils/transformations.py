@@ -20,7 +20,8 @@ def smart_contrast(image_array):
     peaks, _ = find_peaks(hist, height=15, width=3, distance=20)
 
     threshold = np.mean(peaks)
-    return np.vectorize(lambda x: 255 if x > threshold else 0)(image_array)
+    blackwhite = np.vectorize(lambda x: 255 if x > threshold else 0)(image_array)
+    return blackwhite.astype('float32')
 
 def add_dimension(image_array):
     image_array_as_float = np.array(image_array).astype('float32')

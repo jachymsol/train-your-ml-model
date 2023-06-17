@@ -80,7 +80,7 @@ class FileChooserFrame(Widget):
 
 class EvaluationsTab(Widget):
     def new_evaluation(self):
-        model = model_utils.create_train_and_evaluate(image_utils.transform_for_model)
+        model = model_utils.create_train_and_evaluate(self.app_root.state['active_upgrades'])
         
         model_index = len(self.app_root.state['evaluations'])
         self.app_root.state['evaluations'].append(model)

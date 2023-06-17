@@ -4,10 +4,15 @@ from pathlib import Path
 from PIL import Image
 
 from utils.config import get_config
+from utils.transformations import smart_contrast
 
-def create_model():
+def create_model(active_upgrades):
+    size = 32 if 'resize' in active_upgrades else 128
+    channels = 1 if 'grayscale' in active_upgrades else 3
+    input_shape = (size, size, channels)
+
     model = keras.Sequential([
-        keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(128, 128, 1)),
+        keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=input_shape),
         keras.layers.MaxPooling2D((2,2)),
         keras.layers.Conv2D(64, (3,3), activation='relu'),
         keras.layers.MaxPooling2D((2,2)),
@@ -25,28 +30,32 @@ def create_model():
 
     return model
 
-def create_generator(dataset_path, preprocessing_fn=None):
+def create_generator(dataset_path, active_upgrades):
+    color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'rgb'
+    target_size = (32, 32) if 'resize' in active_upgrades else (128, 128)
+    preprocessing_function = smart_contrast if 'contrast' in active_upgrades else None
+
     datagen = keras.preprocessing.image.ImageDataGenerator(
         rescale=1./255,
-        preprocessing_function=preprocessing_fn
+        preprocessing_function=preprocessing_function
     )
 
     return datagen.flow_from_directory(
         dataset_path,
-        target_size=(128, 128),
+        target_size=target_size,
         batch_size=32,
         class_mode='binary',
-        color_mode='grayscale'
+        color_mode=color_mode
     )
 
-def create_train_and_evaluate(preprocessing_fn):
-    model = create_model()
+def create_train_and_evaluate(active_upgrades):
+    model = create_model(active_upgrades)
     train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
-    train_generator = create_generator(train_dataset_path, preprocessing_fn)
+    train_generator = create_generator(train_dataset_path, active_upgrades)
     model.fit(train_generator, epochs=10)
 
     test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
-    test_generator = create_generator(test_dataset_path, preprocessing_fn)
+    test_generator = create_generator(test_dataset_path, active_upgrades)
     test_results = model.evaluate(test_generator, return_dict=True)
 
     model_info = {
