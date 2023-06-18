@@ -78,17 +78,17 @@ def create_train_and_evaluate(active_upgrades):
     model = create_model(active_upgrades)
     train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
     train_generator = create_generator(train_dataset_path, active_upgrades)
+    test_generator = create_generator(train_dataset_path, active_upgrades, is_test=True)
     history = model.fit(train_generator, epochs=10)
     test_accuracy = history.history['accuracy'][-1]
 
     if 'train_test_split' in active_upgrades:
-        test_generator = create_generator(train_dataset_path, active_upgrades, is_test=True)
         test_results = model.evaluate(test_generator, return_dict=True)
         test_accuracy = test_results['accuracy']
 
     model_info = {
         'model': model,
-        'samples': train_generator.samples,
+        'samples': f"{train_generator.samples} + {test_generator.samples}",
         'accuracy': test_accuracy
     }
     return model_info
