@@ -30,37 +30,65 @@ def create_model(active_upgrades):
 
     return model
 
-def create_generator(dataset_path, active_upgrades):
+def create_generator(dataset_path, active_upgrades, is_test=False):
     color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'rgb'
     target_size = (32, 32) if 'resize' in active_upgrades else (128, 128)
     preprocessing_function = smart_contrast if 'contrast' in active_upgrades else None
+    validation_split = 0.2 if 'train_test_split' in active_upgrades else 0
 
-    datagen = keras.preprocessing.image.ImageDataGenerator(
-        rescale=1./255,
-        preprocessing_function=preprocessing_function
-    )
+    if 'image_generation' in active_upgrades:
+        datagen = keras.preprocessing.image.ImageDataGenerator(
+            rescale=1./255,
+            preprocessing_function=preprocessing_function,
+            rotation_range=20,
+            width_shift_range=0.1,
+            height_shift_range=0.1,
+            shear_range=0.2,
+            zoom_range=0.2,
+            horizontal_flip=True,
+            validation_split=validation_split
+        )
+    else:
+        datagen = keras.preprocessing.image.ImageDataGenerator(
+            rescale=1./255,
+            preprocessing_function=preprocessing_function,
+            validation_split=validation_split
+        )
 
+    if is_test:
+        return datagen.flow_from_directory(
+            dataset_path,
+            target_size=target_size,
+            batch_size=32,
+            class_mode='binary',
+            color_mode=color_mode,
+            subset='validation'
+        )
+        
     return datagen.flow_from_directory(
         dataset_path,
         target_size=target_size,
         batch_size=32,
         class_mode='binary',
-        color_mode=color_mode
+        color_mode=color_mode,
+        subset='training'
     )
 
 def create_train_and_evaluate(active_upgrades):
     model = create_model(active_upgrades)
     train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
     train_generator = create_generator(train_dataset_path, active_upgrades)
-    model.fit(train_generator, epochs=10)
+    history = model.fit(train_generator, epochs=10)
+    test_accuracy = history.history['accuracy'][-1]
 
-    test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
-    test_generator = create_generator(test_dataset_path, active_upgrades)
-    test_results = model.evaluate(test_generator, return_dict=True)
+    if 'train_test_split' in active_upgrades:
+        test_generator = create_generator(train_dataset_path, active_upgrades, is_test=True)
+        test_results = model.evaluate(test_generator, return_dict=True)
+        test_accuracy = test_results['accuracy']
 
     model_info = {
         'model': model,
         'samples': train_generator.samples,
-        'accuracy': test_results['accuracy']
+        'accuracy': test_accuracy
     }
     return model_info

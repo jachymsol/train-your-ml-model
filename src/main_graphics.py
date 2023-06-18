@@ -120,7 +120,7 @@ class OneTimeUpgrade(Widget):
 
 class TrainYourModelGame(Widget):
     state = DictProperty({
-        'active_upgrades': set(),
+        'active_upgrades': set(), # grayscale, resize, contrast, image_generation, train_test_split
         'show_transformations_switch': None,
         'evaluations': []
     })
