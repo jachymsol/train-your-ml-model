@@ -18,6 +18,8 @@ Use Keras's ImageDataGenerator??
 - display model training in progress
 - display active upgrades in a model
 
+- brush up graphics
+
 - resolve retracing warning
 
 - logging
