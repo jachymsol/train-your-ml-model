@@ -15,17 +15,19 @@ def max_contrast(image):
 def resize(image):
     return image.resize((32, 32))
 
-def smart_contrast(image_array):
+def smart_contrast(image):
+    image_array = np.array(image)
     hist, _ = np.histogram(image_array, bins=257, range=(-1, 255))
     peaks, _ = find_peaks(hist, height=15, width=3, distance=20)
 
     threshold = np.mean(peaks)
-    blackwhite = np.vectorize(lambda x: 255 if x > threshold else 0)(image_array)
-    return blackwhite.astype('float32')
+    return image.point(lambda x: 255 if x > threshold else 0)
+
+def as_float_array(image):
+    return np.array(image).astype('float32')
 
 def add_dimension(image_array):
-    image_array_as_float = np.array(image_array).astype('float32')
-    return np.expand_dims(image_array_as_float, -1)
+    return np.expand_dims(as_float_array(image_array), -1)
 
 def do_transforms(image_array, *transforms):
     image = Image.fromarray(image_array)
@@ -34,11 +36,11 @@ def do_transforms(image_array, *transforms):
     return np.array(image)
 
 def full_transform(image_array):
-    return do_transforms(image_array, flip, grayscale, resize, max_contrast)
+    return do_transforms(image_array, flip, grayscale, resize, smart_contrast)
 
 Transformations = {
     "flip": flip,
     "grayscale": grayscale,
-    "contrast": max_contrast,
+    "contrast": smart_contrast,
     "resize": resize
 }
