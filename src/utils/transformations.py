@@ -27,8 +27,10 @@ def as_float_array(image):
     return np.array(image).astype('float32')
 
 def smart_contrast_for_model(image_array):
-    new_image = do_transforms(image_array, smart_contrast)
-    return as_float_array(new_image)
+    image_size = image_array.shape[0]
+    old_image = Image.fromarray(image_array.reshape(image_size, image_size), mode='L')
+    new_image = smart_contrast(old_image)
+    return add_dimension(as_float_array(new_image))
 
 def add_dimension(image_array):
     return np.expand_dims(as_float_array(image_array), -1)
