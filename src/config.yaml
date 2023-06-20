@@ -3,5 +3,5 @@ train_folder: '~/Playground/ML/datasets/train'
 test_folder: '~/Playground/ML/datasets/test'
 test_format: 'npy'
 categories:
-  - "animal"
   - "house"
+  - "tree"
