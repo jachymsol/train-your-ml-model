@@ -1,6 +1,9 @@
 import numpy as np
-from scipy.signal import find_peaks
+from scipy.optimize import curve_fit
 from PIL import Image, ImageEnhance
+
+def gauss(x, mu, sigma, A):
+    return A*np.exp(-(x-mu)**2/2/sigma**2)
 
 def flip(image):
     return image.transpose(Image.FLIP_TOP_BOTTOM)
@@ -9,8 +12,8 @@ def grayscale(image):
     return image.convert('L')
 
 def max_contrast(image):
-    enhancer = ImageEnhance.Contrast(image)
-    return enhancer.enhance(50)
+    return image.point(lambda x: 0 if x < 128 else 255)
+
 
 def resize(image):
     return image.resize((32, 32))
@@ -18,10 +21,12 @@ def resize(image):
 def smart_contrast(image):
     image_array = np.array(image)
     hist, _ = np.histogram(image_array, bins=257, range=(-1, 255))
-    peaks, _ = find_peaks(hist, height=15, width=3, distance=20)
+    
+    params, _ = curve_fit(gauss, range(120), hist[:120], (90, 10, 100))
+    min_cutoff = max(params[0] - 3 * abs(params[1]), 20)
+    max_cutoff = min(params[0] + 3 * abs(params[1]), 125)
 
-    threshold = np.mean(peaks)
-    return image.point(lambda x: 255 if x > threshold else 0)
+    return image.point(lambda x: 0 if min_cutoff < x and x < max_cutoff else 255)
 
 def as_float_array(image):
     return np.array(image).astype('float32')
@@ -47,6 +52,6 @@ def full_transform(image_array):
 Transformations = {
     "flip": flip,
     "grayscale": grayscale,
-    "contrast": smart_contrast,
+    "contrast": max_contrast,
     "resize": resize
 }
