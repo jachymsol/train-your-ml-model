@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.optimize import curve_fit
-from PIL import Image, ImageEnhance
+from PIL import Image
 
 def gauss(x, mu, sigma, A):
     return A*np.exp(-(x-mu)**2/2/sigma**2)
@@ -13,7 +13,6 @@ def grayscale(image):
 
 def max_contrast(image):
     return image.point(lambda x: 0 if x < 128 else 255)
-
 
 def resize(image):
     return image.resize((32, 32))
@@ -34,7 +33,7 @@ def as_float_array(image):
 def smart_contrast_for_model(image_array):
     image_size = image_array.shape[0]
     old_image = Image.fromarray(image_array.reshape(image_size, image_size), mode='L')
-    new_image = smart_contrast(old_image)
+    new_image = max_contrast(old_image)
     return add_dimension(as_float_array(new_image))
 
 def add_dimension(image_array):
