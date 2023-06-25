@@ -1,0 +1,114 @@
+<TrainingDataTab>:
+    app_root: None
+    BoxLayout:
+        size: root.size
+        Splitter:
+            size_hint: .47, 1
+            sizable_from: 'right'
+            strip_size: '5pt'
+            UploadImageFrame:
+                parent_root: root
+                app_root: root.app_root
+
+        FileChooserFrame:
+            app_root: root.app_root
+
+<UploadImageFrame>:
+    BoxLayout:
+        size: root.size
+        orientation: 'vertical'
+        Label: 
+            text: 'Upload new photo'
+            bold: True
+            size_hint: 1, .5
+        Image:
+            size_hint: 1, 2
+            id: camera_image
+            allow_stretch: True
+        BoxLayout:
+            size_hint: 1, .5
+            CheckBox:
+                group: 'categories'
+                pos_hint: {'center_x': .9}
+                active: root.is_selected_first_category
+                disabled: root.is_selected_first_category
+                on_press: root.is_selected_first_category = True
+                
+                canvas.before:
+                    Color:
+                        rgba: .5, .5, .5, 1
+                    Rectangle:
+                        # self here refers to the widget i.e FloatLayout
+                        pos: self.pos
+                        size: self.size
+            Label:
+                text: 'House'
+        BoxLayout:
+            size_hint: 1, .5
+            CheckBox:
+                group: 'categories'
+                pos_hint: {'center_x': .9}
+                active: not root.is_selected_first_category
+                disabled: not root.is_selected_first_category
+                on_press: root.is_selected_first_category = False
+            Label:
+                text: 'Tree'
+        Button:
+            size_hint: 1, .5
+            id: capture_button
+            text: 'Take picture'
+            on_release: root.capture_image()
+            disabled: not root.is_capturing
+        BoxLayout:
+            size_hint: 1, .5
+            Button:
+                id: retake_button
+                text: 'Retake'
+                disabled: root.is_capturing
+                on_release: root.retake_image()
+            Button:
+                id: save_button
+                text: 'Save'
+                disabled: root.is_capturing
+                on_release: root.save_image()
+
+<FileChooserFrame>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'vertical'
+        RelativeLayout:
+            Image:
+                canvas.before:
+                    Color:
+                        rgba: (.5, .5, .5, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                id: file_image
+                color: 'grey'
+                allow_stretch: True
+                keep_ratio: True
+                source: ''
+            Button:
+                id: delete_image_button
+                pos_hint: {'bottom': 1, 'right': 1}
+                size_hint: None, None
+                size: 100, 100
+                text: 'Delete'
+                disabled: True
+                on_release: root.delete_selected_image()
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 470, 100
+                pos_hint: {'top': 1, 'right': 1}
+                Label:
+                    text: 'Show tranformations'
+                Switch:
+                    id: show_transformations_switch
+        FileChooserIconView:
+            id: file_chooser
+            dirselect: False
+            filters: ['*.png']
+            rootpath: '../datasets'

@@ -1,0 +1,103 @@
+<UpgradesTab>:
+    app_root: None
+    BoxLayout:
+        size: root.size
+        orientation: 'horizontal'
+        VerticalSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Permanent Upgrades"
+                bold: True
+                size_hint: 1, None
+                height: 150
+            PurchasableUpgrade:
+                app_root: root.app_root
+                upgrade_id: "resize"
+                label_text: "Resize to 32x32"
+            PurchasableUpgrade:
+                app_root: root.app_root
+                upgrade_id: "grayscale"
+                label_text: "Grayscale"
+            PurchasableUpgrade:
+                app_root: root.app_root
+                upgrade_id: "contrast"
+                label_text: "Max Contrast"
+            PurchasableUpgrade:
+                app_root: root.app_root
+                upgrade_id: "image_generation"
+                label_text: "Image Generation"
+            PurchasableUpgrade:
+                app_root: root.app_root
+                upgrade_id: "train_test_split"
+                label_text: "Train/Test split"
+            Label:
+        VerticalSeparator:
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "One Time Upgrades"
+                bold: True
+                size_hint: 1, None
+                height: 150
+            OneTimeUpgrade:
+                label_text: "Evaluate a model on the Test dataset"
+            OneTimeUpgrade:
+                label_text: "Train data to Test dataset"
+            OneTimeUpgrade:
+                label_text: "Test data to Train dataset"
+            OneTimeUpgrade:
+                label_text: "Sabotage"
+            Label:
+        VerticalSeparator:
+                
+
+
+<PurchasableUpgrade>:
+    label_text: ""
+    size_hint: 1, None
+    height: 100
+    BoxLayout:
+        id: purchase_row
+        width: root.width
+        pos: root.pos
+        orientation: 'horizontal'
+        padding: 50, 5
+        Switch:
+            id: active_switch
+            size_hint: None, 1
+            width: 250
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            disabled: not root.is_purchased
+            on_touch_up: root.update_active_state()
+        Label:
+            text: root.label_text
+            text_size: self.size
+            halign: 'left'
+            valign: 'center'
+        Button:
+            id: purchase_button
+            size_hint: None, 1
+            width: 200
+            text: "Buy"
+            on_release: root.purchase()
+
+<OneTimeUpgrade>:
+    label_text: ""
+    size_hint: 1, None
+    height: 100
+    BoxLayout:
+        width: root.width
+        pos: root.pos
+        orientation: 'horizontal'
+        padding: 50, 5
+        Label:
+            text: root.label_text
+            text_size: self.size
+            halign: 'left'
+            valign: 'center'
+        Button:
+            id: purchase_button
+            size_hint: None, 1
+            width: 200
+            text: "Buy"

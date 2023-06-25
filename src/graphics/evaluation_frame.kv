@@ -1,0 +1,43 @@
+<EvaluationsTab>:
+    app_root: None
+    BoxLayout:
+        size: root.size
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint: 1, None
+            height: 130
+            padding: 15, 15
+            spacing: 100
+            orientation: 'horizontal'
+            Label:
+                text: 'Evaluations'
+                bold: True
+            Button:
+                text: 'New evaluation'
+                on_release: root.new_evaluation()
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            GridLayout:
+                id: evaluation_results
+                cols: 1
+                size_hint: 1, None
+                height: 0
+
+<EvaluationRow>:
+    app_root: None
+    model_index: None
+    initialized: False
+    size_hint: 1, None
+    height: 70
+    BoxLayout:
+        pos: root.pos
+        size: root.size
+        orientation: 'horizontal'
+        Label:
+            text: "Evaluation " + str(root.model_index + 1) + " (" + root.app_root.state['evaluations'][root.model_index]['samples'] + " images"  + ")" if root.initialized else ""
+        Label:
+            text: "Active upgrades: " + root.get_active_upgrades() if root.initialized else ""
+        Label:
+            text: "Accuracy: " + root.get_accuracy() if root.initialized else ""
