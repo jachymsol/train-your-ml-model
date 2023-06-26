@@ -55,5 +55,10 @@ def load(image_path):
 def save(image, image_path):
     cv2.imwrite(str(image_path), cv2.resize(image, (128, 128)))
 
-def delete(image_path):
-    Path.unlink(Path(image_path))
+def delete(image_path_string):
+    image_path = Path(image_path_string)
+    image_name = image_path.parts[-1]
+    category = image_path.parts[-2]
+    new_path = image_path.parent.parent.parent / 'deleted' / category / image_name
+    image_path.rename(new_path)
+    # Path.unlink(Path(image_path))
