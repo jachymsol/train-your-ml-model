@@ -27,6 +27,7 @@
 
 <EvaluationRow>:
     app_root: None
+    loading: True
     model_index: None
     initialized: False
     size_hint: 1, None
@@ -36,8 +37,8 @@
         size: root.size
         orientation: 'horizontal'
         Label:
-            text: "Evaluation " + str(root.model_index + 1) + " (" + root.app_root.state['evaluations'][root.model_index]['samples'] + " images"  + ")" if root.initialized else ""
+            text: "" if not root.initialized else "Evaluation " + str(root.model_index + 1) if root.loading else "Evaluation " + str(root.model_index + 1) + " (" + root.app_root.state['evaluations'][root.model_index]['samples'] + " images"  + ")"
         Label:
-            text: "Active upgrades: " + root.get_active_upgrades() if root.initialized else ""
+            text: "Active upgrades: " + root.get_active_upgrades() if root.initialized and not root.loading else ""
         Label:
-            text: "Accuracy: " + root.get_accuracy() if root.initialized else ""
+            text: "In progress..." if root.loading else "Accuracy: " + root.get_accuracy()
