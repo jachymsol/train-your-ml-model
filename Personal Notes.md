@@ -15,12 +15,12 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
-- display model training in progress
-- display active upgrades in a model
+- fix text overflow with active upgrades in a model
 
 - brush up graphics
 
-- resolve retracing warning
+- implement coins
+- add more upgrades (in-life)
 
 - logging
     - save state of app
