@@ -10,7 +10,8 @@ from utils.config import get_config
 Builder.load_file("graphics/training_frame.kv")
 
 class TrainingDataTab(Widget):
-    pass
+    def update_file_chooser(self, _):
+        self.ids.file_chooser.update_file_chooser()
 
 class UploadImageFrame(Widget):
     is_capturing = BooleanProperty(True)
@@ -43,6 +44,7 @@ class UploadImageFrame(Widget):
             get_config('categories')[0] if self.is_selected_first_category else get_config('categories')[1]
         )
         image_utils.save(self.image, image_path)
+        Clock.schedule_once(self.parent_root.update_file_chooser)
         self.app_root.add_coins(1)
         self.is_capturing = True
 
@@ -50,14 +52,13 @@ class FileChooserFrame(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        Clock.schedule_interval(self.update_file_chooser, 5.0)
         Clock.schedule_interval(self.update_selected_image, 1./30)
     
     def on_kv_post(self, base_widget):
         self.app_root.state['show_transformations_switch'] = self.ids.show_transformations_switch
         return super().on_kv_post(base_widget)
 
-    def update_file_chooser(self, _):
+    def update_file_chooser(self):
         self.ids.file_chooser._update_files()
 
     def update_selected_image(self, _):
@@ -71,5 +72,6 @@ class FileChooserFrame(Widget):
 
     def delete_selected_image(self):
         image_utils.delete(self.ids.file_image.source)
+        Clock.schedule_once(self.parent_root.update_file_chooser)
         self.ids.file_image.texture = None
         self.ids.delete_image_button.disabled = True
