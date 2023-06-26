@@ -1,20 +1,31 @@
 <TrainYourModelGame>:
-    TabbedPanel:
+    FloatLayout:
         size: root.size
-        do_default_tab: False
 
-        TabbedPanelItem:
-            text: 'Training Data'
-            TrainingDataTab:
-                app_root: root
-        TabbedPanelItem:
-            text: 'Evaluations'
-            EvaluationsTab:
-                app_root: root
-        TabbedPanelItem:
-            text: 'Upgrades'
-            UpgradesTab:
-                app_root: root
+        TabbedPanel:
+            size: root.size
+            do_default_tab: False
+
+            TabbedPanelItem:
+                text: 'Training Data'
+                TrainingDataTab:
+                    app_root: root
+            TabbedPanelItem:
+                text: 'Evaluations'
+                EvaluationsTab:
+                    app_root: root
+            TabbedPanelItem:
+                text: 'Upgrades'
+                UpgradesTab:
+                    app_root: root
+        
+        Label:
+            id: coins_label
+            text: 'Coins: ' + str(root.state['coins'])
+            halign: 'right'
+            size_hint: None, None
+            size: (200, 90)
+            pos_hint: {'right': 1, 'top': 1}
 
 <VerticalSeparator@Widget>:
     size_hint: None, 1
