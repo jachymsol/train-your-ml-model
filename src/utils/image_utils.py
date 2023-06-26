@@ -61,4 +61,3 @@ def delete(image_path_string):
     category = image_path.parts[-2]
     new_path = image_path.parent.parent.parent / 'deleted' / category / image_name
     image_path.rename(new_path)
-    # Path.unlink(Path(image_path))
