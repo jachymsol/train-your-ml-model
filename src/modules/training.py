@@ -43,6 +43,7 @@ class UploadImageFrame(Widget):
             get_config('categories')[0] if self.is_selected_first_category else get_config('categories')[1]
         )
         image_utils.save(self.image, image_path)
+        self.app_root.add_coins(1)
         self.is_capturing = True
 
 class FileChooserFrame(Widget):

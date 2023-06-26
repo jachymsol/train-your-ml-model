@@ -17,3 +17,7 @@ class TrainYourModelGame(Widget):
         'show_transformations_switch': None,
         'evaluations': []
     })
+
+    def add_coins(self, coins):
+        self.state['coins'] += coins
+        self.ids.coins_label.text = f"Coins: {self.state['coins']}"
