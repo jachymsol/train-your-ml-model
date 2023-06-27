@@ -1,0 +1,15 @@
+resize:
+    abbreviation: 'Z'
+    display_name: 'Zmensit na 32x32'
+grayscale:
+    abbreviation: 'S'
+    display_name: 'Odstiny sede'
+contrast:
+    abbreviation: 'K'
+    display_name: 'Zvysit kontrast'
+image_generation:
+    abbreviation: 'G'
+    display_name: 'Vygenerovat podobne'
+train_test_split:
+    abbreviation: 'T'
+    display_name: 'Oddelit testovaci'

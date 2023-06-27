@@ -5,33 +5,13 @@
         orientation: 'horizontal'
         VerticalSeparator:
         BoxLayout:
+            id: permanent_upgrades
             orientation: 'vertical'
             Label:
                 text: "Permanent Upgrades"
                 bold: True
                 size_hint: 1, None
                 height: 150
-            PurchasableUpgrade:
-                app_root: root.app_root
-                upgrade_id: "resize"
-                label_text: "Resize to 32x32"
-            PurchasableUpgrade:
-                app_root: root.app_root
-                upgrade_id: "grayscale"
-                label_text: "Grayscale"
-            PurchasableUpgrade:
-                app_root: root.app_root
-                upgrade_id: "contrast"
-                label_text: "Max Contrast"
-            PurchasableUpgrade:
-                app_root: root.app_root
-                upgrade_id: "image_generation"
-                label_text: "Image Generation"
-            PurchasableUpgrade:
-                app_root: root.app_root
-                upgrade_id: "train_test_split"
-                label_text: "Train/Test split"
-            Label:
         VerticalSeparator:
         BoxLayout:
             orientation: 'vertical'
@@ -41,18 +21,18 @@
                 size_hint: 1, None
                 height: 150
             OneTimeUpgrade:
-                label_text: "Evaluate a model on the Test dataset"
+                display_name: "Evaluate a model on the Test dataset"
             OneTimeUpgrade:
-                label_text: "Train data to Test dataset"
+                display_name: "Train data to Test dataset"
             OneTimeUpgrade:
-                label_text: "Test data to Train dataset"
+                display_name: "Test data to Train dataset"
             OneTimeUpgrade:
-                label_text: "Hint"
+                display_name: "Hint"
             Label:
         VerticalSeparator:
                 
 <PurchasableUpgrade>:
-    label_text: ""
+    display_name: ""
     size_hint: 1, None
     height: 100
     BoxLayout:
@@ -69,7 +49,7 @@
             disabled: not root.is_purchased
             on_touch_up: root.update_active_state()
         Label:
-            text: root.label_text
+            text: root.display_name
             text_size: self.size
             halign: 'left'
             valign: 'center'
@@ -82,7 +62,7 @@
                 source: 'icons/coin.png'
 
 <OneTimeUpgrade>:
-    label_text: ""
+    display_name: ""
     size_hint: 1, None
     height: 100
     BoxLayout:
@@ -91,7 +71,7 @@
         orientation: 'horizontal'
         padding: 50, 5
         Label:
-            text: root.label_text
+            text: root.display_name
             text_size: self.size
             halign: 'left'
             valign: 'center'

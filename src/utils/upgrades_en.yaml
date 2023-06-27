@@ -1,0 +1,15 @@
+resize:
+  abbreviation: 'R'
+  display_name: 'Resize to 32x32'
+grayscale:
+  abbreviation: 'B'
+  display_name: 'Grayscale'
+contrast:
+  abbreviation: 'C'
+  display_name: 'Max Contrast'
+image_generation:
+  abbreviation: 'G'
+  display_name: 'Image Generation'
+train_test_split:
+  abbreviation: 'T'
+  display_name: 'Train/Test Split'
