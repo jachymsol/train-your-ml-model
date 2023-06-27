@@ -1,3 +1,5 @@
+#: import config utils.config
+
 <TrainingDataTab>:
     app_root: None
     BoxLayout:
@@ -43,7 +45,7 @@
                         pos: self.pos
                         size: self.size
             Label:
-                text: 'House'
+                text: config.get_config('categories')[0].capitalize()
         BoxLayout:
             size_hint: 1, .5
             CheckBox:
@@ -53,7 +55,7 @@
                 disabled: not root.is_selected_first_category
                 on_press: root.is_selected_first_category = False
             Label:
-                text: 'Tree'
+                text: config.get_config('categories')[1].capitalize()
         Button:
             size_hint: 1, .5
             id: capture_button
