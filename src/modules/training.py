@@ -28,7 +28,7 @@ class UploadImageFrame(Widget):
             self.image = camera_utils.capture(self.camera)
         
         transforms = (self.app_root.state['active_upgrades'] 
-                      if self.app_root.state['show_transformations_switch'].active
+                      if self.app_root.state['show_transformations']
                       else [])
         image_utils.transform_and_display(self.image, self.ids.camera_image, transforms)
     
@@ -54,10 +54,6 @@ class FileChooserFrame(Widget):
 
         Clock.schedule_interval(self.update_selected_image, 1./10)
     
-    def on_kv_post(self, base_widget):
-        self.app_root.state['show_transformations_switch'] = self.ids.show_transformations_switch
-        return super().on_kv_post(base_widget)
-
     def update_file_chooser(self, _):
         self.ids.file_chooser._update_files()
 
@@ -65,7 +61,7 @@ class FileChooserFrame(Widget):
         if len(self.ids.file_chooser.selection) > 0:
             image = image_utils.load(self.ids.file_chooser.selection[0])
             transforms = (self.app_root.state['active_upgrades'] 
-                        if self.app_root.state['show_transformations_switch'].active
+                        if self.app_root.state['show_transformations']
                         else [])
             image_utils.transform_and_display(image, self.ids.file_image, transforms)
         self.ids.delete_image_button.disabled = False

@@ -78,40 +78,39 @@
         size: root.size
         pos: root.pos
         orientation: 'vertical'
-        RelativeLayout:
-            Image:
-                canvas.before:
-                    Color:
-                        rgba: (.5, .5, .5, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                id: file_image
-                color: 'grey'
-                allow_stretch: True
-                keep_ratio: True
-                source: ''
-            Button:
-                id: delete_image_button
-                pos_hint: {'bottom': 1, 'right': 1}
-                size_hint: None, None
-                size: 100, 100
-                # text: 'Delete'
-                disabled: True
-                on_release: root.delete_selected_image()
-                IconImage:
-                    source: 'icons/delete.png'
-            BoxLayout:
-                orientation: 'horizontal'
-                size_hint: None, None
-                size: 470, 100
-                pos_hint: {'top': 1, 'right': 1}
-                Label:
-                    text: 'Show tranformations'
-                Switch:
-                    id: show_transformations_switch
+        Image:
+            canvas.before:
+                Color:
+                    rgba: (.5, .5, .5, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            id: file_image
+            color: 'grey'
+            allow_stretch: True
+            keep_ratio: True
+            source: ''
         FileChooserIconView:
             id: file_chooser
             dirselect: False
             filters: ['*.png']
             rootpath: '../datasets'
+
+    ToggleButton:
+        size_hint: None, None
+        size: 100, 100
+        pos: root.ids.file_image.x + root.ids.file_image.width - self.width - 25, root.ids.file_image.y + root.ids.file_image.height - self.height - 25
+        state: 'down'
+        on_release: root.app_root.state['show_transformations'] = self.state == 'down'
+        IconImage:
+            source: 'icons/preview.png'
+    Button:
+        id: delete_image_button
+        size_hint: None, None
+        size: 100, 100
+        pos: root.ids.file_image.x + root.ids.file_image.width - self.width - 25, root.ids.file_image.y + 25
+        # text: 'Delete'
+        disabled: True
+        on_release: root.delete_selected_image()
+        IconImage:
+            source: 'icons/delete.png'

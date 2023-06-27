@@ -16,7 +16,7 @@ class TrainYourModelGame(Widget):
         'language': get_config('language'),
         'coins': 0,
         'active_upgrades': set(), # grayscale, resize, contrast, image_generation, train_test_split
-        'show_transformations_switch': None,
+        'show_transformations': True,
         'evaluations': []
     })
 
