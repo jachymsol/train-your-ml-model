@@ -1,3 +1,5 @@
+#: import yaml_utils utils.yaml_utils
+
 <EvaluationsTab>:
     app_root: None
     
@@ -32,19 +34,19 @@
         size: root.size
         orientation: 'horizontal'
         Label:
-            text: 'Eval #'
+            text: yaml_utils.get_local_text('evaluations.yaml', 'eval_no')
             bold: True
         Label:
-            text: 'Samples'
+            text: yaml_utils.get_local_text('evaluations.yaml', 'samples')
             bold: True
         Label:
-            text: 'Active Upgrades'
+            text: yaml_utils.get_local_text('evaluations.yaml', 'active_upgrades')
             bold: True
         Label:
-            text: 'Training Accuracy'
+            text: yaml_utils.get_local_text('evaluations.yaml', 'train_score')
             bold: True
         Label:
-            text: 'Test Accuracy'
+            text: yaml_utils.get_local_text('evaluations.yaml', 'test_score')
             bold: True
 
 <EvaluationRow>:
@@ -70,4 +72,3 @@
             id: test_button
             text: "Test"
             on_press: root.test_model()
-            

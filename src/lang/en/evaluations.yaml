@@ -1,0 +1,5 @@
+eval_no: 'Eval #'
+samples: 'Samples'
+active_upgrades: 'Active Upgrades'
+train_score: 'Training Score'
+test_score: 'Test Score'

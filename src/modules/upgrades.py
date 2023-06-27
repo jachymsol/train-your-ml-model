@@ -3,7 +3,7 @@ from kivy.lang.builder import Builder
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 
-from utils.yaml_utils import read_yaml
+from utils.yaml_utils import get_local_upgrade
 
 Builder.load_file("graphics/upgrades_frame.kv")
 
@@ -12,7 +12,7 @@ class UpgradesTab(Widget):
         super().__init__(**kwargs)
         
     def on_kv_post(self, base_widget):
-        upgrades = read_yaml(f"utils/upgrades_{self.app_root.state['language']}.yaml")
+        upgrades = get_local_upgrade()
 
         for upgrade in upgrades:
             self.ids.permanent_upgrades.add_widget(PurchasableUpgrade(upgrade, upgrades[upgrade], self.app_root))
