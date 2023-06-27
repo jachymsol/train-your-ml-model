@@ -1,4 +1,5 @@
 #: include graphics/icon_image.kv
+#: include graphics/separators.kv
 
 <TrainYourModelGame>:
     FloatLayout:
@@ -38,13 +39,3 @@
             size_hint: None, None
             size: (200, 90)
             pos_hint: {'right': 1, 'top': 1}
-
-<VerticalSeparator@Widget>:
-    size_hint: None, 1
-    width: 10
-    canvas.before:
-        Color:
-            rgba: (0,0,0,1)
-        Rectangle:
-            size: self.size
-            pos: self.pos

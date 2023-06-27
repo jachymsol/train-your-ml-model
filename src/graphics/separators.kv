@@ -1,0 +1,19 @@
+<HorizontalSeparator@Widget>:
+    size_hint: 1, None
+    height: 10
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<VerticalSeparator@Widget>:
+    size_hint: None, 1
+    width: 10
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
