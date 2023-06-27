@@ -51,8 +51,6 @@
             Label:
         VerticalSeparator:
                 
-
-
 <PurchasableUpgrade>:
     label_text: ""
     size_hint: 1, None
@@ -79,8 +77,9 @@
             id: purchase_button
             size_hint: None, 1
             width: 200
-            text: "Buy"
             on_release: root.purchase()
+            IconImage:
+                source: 'icons/coin.png'
 
 <OneTimeUpgrade>:
     label_text: ""
@@ -100,4 +99,5 @@
             id: purchase_button
             size_hint: None, 1
             width: 200
-            text: "Buy"
+            IconImage:
+                source: 'icons/coin.png'

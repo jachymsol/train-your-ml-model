@@ -20,10 +20,6 @@
     BoxLayout:
         size: root.size
         orientation: 'vertical'
-        Label: 
-            text: 'Upload new photo'
-            bold: True
-            size_hint: 1, .5
         Image:
             size_hint: 1, 2
             id: camera_image
@@ -41,31 +37,41 @@
             Label:
                 text: "Category:"
             Button:
-                text: config.get_config('categories')[0].capitalize()
+                # text: config.get_config('categories')[0].capitalize()
                 on_press: root.is_selected_first_category = True
                 background_color: (.6, .6, 1, 1) if root.is_selected_first_category else (1, 1, 1, 1)
+                IconImage:
+                    source: 'icons/house.png'
             Button:
-                text: config.get_config('categories')[1].capitalize()
+                # text: config.get_config('categories')[1].capitalize()
                 on_press: root.is_selected_first_category = False
                 background_color: (.6, .6, 1, 1) if not root.is_selected_first_category else (1, 1, 1, 1)
+                IconImage:
+                    source: 'icons/tree.png'
         Button:
             size_hint: 1, .5
             id: capture_button
-            text: 'Take picture'
+            # text: 'Take picture'
             on_release: root.capture_image()
             disabled: not root.is_capturing
+            IconImage:
+                source: 'icons/camera.png'
         BoxLayout:
             size_hint: 1, .5
             Button:
                 id: retake_button
-                text: 'Retake'
+                # text: 'Retake'
                 disabled: root.is_capturing
                 on_release: root.retake_image()
+                IconImage:
+                    source: 'icons/undo.png'
             Button:
                 id: save_button
-                text: 'Save'
+                # text: 'Save'
                 disabled: root.is_capturing
                 on_release: root.save_image()
+                IconImage:
+                    source: 'icons/save.png'
 
 <FileChooserFrame>:
     BoxLayout:
@@ -90,9 +96,11 @@
                 pos_hint: {'bottom': 1, 'right': 1}
                 size_hint: None, None
                 size: 100, 100
-                text: 'Delete'
+                # text: 'Delete'
                 disabled: True
                 on_release: root.delete_selected_image()
+                IconImage:
+                    source: 'icons/delete.png'
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: None, None

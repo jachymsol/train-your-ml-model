@@ -1,3 +1,5 @@
+#: include graphics/icon_image.kv
+
 <TrainYourModelGame>:
     FloatLayout:
         size: root.size
@@ -6,18 +8,28 @@
             size: root.size
             do_default_tab: False
 
-            TabbedPanelItem:
-                text: 'Training Data'
-                TrainingDataTab:
-                    app_root: root
-            TabbedPanelItem:
-                text: 'Evaluations'
-                EvaluationsTab:
-                    app_root: root
-            TabbedPanelItem:
-                text: 'Upgrades'
-                UpgradesTab:
-                    app_root: root
+            TrainingDataTab:
+                id: training_tab
+                app_root: root
+            EvaluationsTab:
+                id: evaluations_tab
+                app_root: root
+            UpgradesTab:
+                id: upgrades_tab
+                app_root: root
+
+            TabbedPanelHeader:
+                content: training_tab.__self__
+                IconImage:
+                    source: 'icons/photo_library.png'
+            TabbedPanelHeader:
+                content: evaluations_tab.__self__
+                IconImage:
+                    source: 'icons/evaluations.png'
+            TabbedPanelHeader:
+                content: upgrades_tab.__self__
+                IconImage:
+                    source: 'icons/upgrades.png'
         
         Label:
             id: coins_label
