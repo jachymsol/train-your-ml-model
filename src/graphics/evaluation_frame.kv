@@ -43,12 +43,15 @@
         Label:
             text: 'Training Accuracy'
             bold: True
+        Label:
+            text: 'Test Accuracy'
+            bold: True
 
 <EvaluationRow>:
     app_root: None
+    initialized: False
     loading: True
     model_index: None
-    initialized: False
     size_hint: 1, None
     height: 70
     BoxLayout:
@@ -63,3 +66,8 @@
             text: root.get_active_upgrades() if root.initialized and not root.loading else ""
         Label:
             text: "In progress..." if root.loading else root.get_accuracy()
+        Button:
+            id: test_button
+            text: "Test"
+            on_press: root.test_model()
+            

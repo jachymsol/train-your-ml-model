@@ -1,6 +1,7 @@
 from kivy.lang.builder import Builder
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 
 import utils.model_utils as model_utils
 
@@ -30,10 +31,21 @@ class EvaluationRow(Widget):
         self.model_index = model_index
         self.initialized = True
     
-    def get_active_upgrades(self):
-        if len(self.app_root.state['active_upgrades']) == 0:
-            return "None"
-        return ', '.join(self.app_root.state['active_upgrades'])
+    def test_model(self):
+        evaluation = self.app_root.state['evaluations'][self.model_index]
+        result = model_utils.test(evaluation['model'], evaluation['active_upgrades'])
 
-    def get_accuracy(self):
-        return str(round(self.app_root.state['evaluations'][self.model_index]['accuracy'], 2) * 100) + '%'
+        self.app_root.state['evaluations'][self.model_index]['test_accuracy'] = result
+        self.display_test_accuracy()
+        
+    def display_test_accuracy(self):
+        self.children[0].remove_widget(self.ids.test_button)
+        self.children[0].add_widget(Label(text=self.get_accuracy(test=True)))
+    
+    def get_active_upgrades(self):
+        if len(self.app_root.state['evaluations'][self.model_index]['active_upgrades']) == 0:
+            return "-"
+        return ', '.join(self.app_root.state['evaluations'][self.model_index]['active_upgrades'])
+
+    def get_accuracy(self, test=False):
+        return str(round(self.app_root.state['evaluations'][self.model_index]['test_accuracy' if test else 'train_accuracy'] * 100, 1)) + '%'

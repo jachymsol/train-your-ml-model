@@ -88,7 +88,16 @@ def create_train_and_evaluate(active_upgrades):
 
     model_info = {
         'model': model,
+        'active_upgrades': active_upgrades,
         'samples': f"{train_generator.samples} + {test_generator.samples}",
-        'accuracy': test_accuracy
+        'train_accuracy': test_accuracy,
+        'test_accuracy': None
     }
     return model_info
+
+def test(model, active_upgrades):
+    test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
+    test_generator = create_generator(test_dataset_path, active_upgrades)
+
+    results = model.evaluate(test_generator, return_dict=True)
+    return results['accuracy']
