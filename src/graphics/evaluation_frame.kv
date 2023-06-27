@@ -16,6 +16,8 @@
                 on_release: root.new_evaluation()
                 IconImage:
                     source: 'icons/new.png'
+        
+        EvaluationsHeaderRow:
 
         ScrollView:
             do_scroll_x: False
@@ -25,6 +27,22 @@
                 cols: 1
                 size_hint: 1, None
                 height: 0
+
+<EvaluationsHeaderRow@Widget>:
+    size_hint: 1, None
+    height: 70
+    BoxLayout:
+        pos: root.pos
+        size: root.size
+        orientation: 'horizontal'
+        Label:
+            text: 'Eval #'
+        Label:
+            text: 'Samples'
+        Label:
+            text: 'Active Upgrades'
+        Label:
+            text: 'Training Accuracy'
 
 <EvaluationRow>:
     app_root: None
@@ -38,8 +56,10 @@
         size: root.size
         orientation: 'horizontal'
         Label:
-            text: "" if not root.initialized else "Evaluation " + str(root.model_index + 1) if root.loading else "Evaluation " + str(root.model_index + 1) + " (" + root.app_root.state['evaluations'][root.model_index]['samples'] + " images"  + ")"
+            text: str(root.model_index + 1) if root.initialized else ""
         Label:
-            text: "Active upgrades: " + root.get_active_upgrades() if root.initialized and not root.loading else ""
+            text: root.app_root.state['evaluations'][root.model_index]['samples'] if not root.loading else ""
         Label:
-            text: "In progress..." if root.loading else "Accuracy: " + root.get_accuracy()
+            text: root.get_active_upgrades() if root.initialized and not root.loading else ""
+        Label:
+            text: "In progress..." if root.loading else root.get_accuracy()
