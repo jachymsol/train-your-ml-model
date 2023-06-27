@@ -22,4 +22,4 @@ class TrainYourModelGame(Widget):
 
     def add_coins(self, coins):
         self.state['coins'] += coins
-        self.ids.coins_label.text = f"Coins: {self.state['coins']}"
+        self.ids.coins_label.text = str(self.state['coins'])

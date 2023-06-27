@@ -32,10 +32,15 @@
                 IconImage:
                     source: 'icons/upgrades.png'
         
-        Label:
-            id: coins_label
-            text: 'Coins: ' + str(root.state['coins'])
-            halign: 'right'
+        BoxLayout:
+            orientation: 'horizontal'
             size_hint: None, None
-            size: (200, 90)
-            pos_hint: {'right': 1, 'top': 1}
+            size: 180, 70
+            pos: root.width - 200, root.height - 80
+            IconImage:
+                source: 'icons/coin.png'
+            Label:
+                id: coins_label
+                text: str(root.state['coins'])
+                bold: True
+                font_size: 36
