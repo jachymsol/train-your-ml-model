@@ -1,0 +1,10 @@
+# requirements.in
+Kivy
+tensorflow==2.13.0rc1
+keras
+Pillow
+scipy
+numpy
+matplotlib
+jupyter
+PyYAML
