@@ -1,24 +1,11 @@
 <EvaluationsTab>:
     app_root: None
+    
     BoxLayout:
         size: root.size
         orientation: 'vertical'
-        BoxLayout:
-            size_hint: 1, None
-            height: 130
-            padding: 15, 15
-            spacing: 100
-            orientation: 'horizontal'
-            Label:
-                text: 'Evaluations'
-                bold: True
-            Button:
-                on_release: root.new_evaluation()
-                IconImage:
-                    source: 'icons/new.png'
-        
-        EvaluationsHeaderRow:
 
+        EvaluationsHeaderRow:
         ScrollView:
             do_scroll_x: False
             do_scroll_y: True
@@ -28,21 +15,33 @@
                 size_hint: 1, None
                 height: 0
 
+    Button:
+        size_hint: None, None
+        size: 130, 130
+        pos: root.x + root.width - self.width - 30, root.y + 30
+        on_release: root.new_evaluation()
+        IconImage:
+            source: 'icons/new.png'
+
 <EvaluationsHeaderRow@Widget>:
     size_hint: 1, None
-    height: 70
+    height: 100
     BoxLayout:
         pos: root.pos
         size: root.size
         orientation: 'horizontal'
         Label:
             text: 'Eval #'
+            bold: True
         Label:
             text: 'Samples'
+            bold: True
         Label:
             text: 'Active Upgrades'
+            bold: True
         Label:
             text: 'Training Accuracy'
+            bold: True
 
 <EvaluationRow>:
     app_root: None
