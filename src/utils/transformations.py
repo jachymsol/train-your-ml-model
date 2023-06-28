@@ -10,10 +10,12 @@ def as_image(image_array, mode='RGB'):
     return Image.fromarray(rgb_to_bgr(image_array), mode)
 
 def as_array(image):
-    return np.array(rgb_to_bgr(image)).copy()
+    if image.mode == 'RGB':
+        return rgb_to_bgr(np.array(image)).copy()
+    return np.array(image).copy()
 
 def as_float_array(image):
-    return np.array(rgb_to_bgr(image)).astype('float32').copy()
+    return rgb_to_bgr(np.array(image)).astype('float32').copy()
 
 def add_dimension(image_array):
     return np.expand_dims(as_float_array(image_array), -1)
