@@ -3,7 +3,7 @@ import random
 from pathlib import Path
 from kivy.graphics.texture import Texture
 
-from utils.transformations import add_dimension, do_transforms, smart_contrast, Transformations
+from utils.transformations import do_transforms, Transformations
 from utils.config import get_config
 
 def crop_to_square(image):

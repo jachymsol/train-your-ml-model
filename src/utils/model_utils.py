@@ -1,10 +1,9 @@
 import tensorflow as tf
 from tensorflow import keras
 from pathlib import Path
-from PIL import Image
 
 from utils.config import get_config
-from utils.transformations import smart_contrast_for_model
+from utils.transformations import max_contrast_for_model
 
 def create_model(active_upgrades):
     size = 32 if 'resize' in active_upgrades else 128
@@ -31,9 +30,9 @@ def create_model(active_upgrades):
     return model
 
 def create_generator(dataset_path, active_upgrades, is_test=False):
-    color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'rgb'
+    color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'bgr'
     target_size = (32, 32) if 'resize' in active_upgrades else (128, 128)
-    preprocessing_function = smart_contrast_for_model if 'contrast' in active_upgrades else None
+    preprocessing_function = max_contrast_for_model if 'contrast' in active_upgrades else None
     validation_split = 0.2 if 'train_test_split' in active_upgrades else 0
 
     if 'image_generation' in active_upgrades:
