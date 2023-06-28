@@ -20,8 +20,8 @@
 
     Button:
         size_hint: None, None
-        size: 130, 130
-        pos: root.x + root.width - self.width - 30, root.y + 30
+        size: root.height * 0.1, root.height * 0.1
+        pos: root.x + root.width - (self.width * 1.2), root.y + (self.height * 0.2)
         on_release: root.new_evaluation()
         IconImage:
             source: 'icons/new.png'
