@@ -14,7 +14,7 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 class TrainYourModelGame(Widget):
     state = DictProperty({
         'language': get_config('language'),
-        'coins': 0,
+        'coins': get_config('start_coins'),
         'active_upgrades': set(), # grayscale, resize, contrast, image_generation, train_test_split
         'show_transformations': True,
         'evaluations': []
