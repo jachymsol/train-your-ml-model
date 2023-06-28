@@ -33,7 +33,7 @@ test_to_train:
   type: 'single_use'
   display_name: 'Test data to Train dataset'
   cost: 20
-  callback: 'image_utils.train_to_test()'
+  callback: 'image_utils.test_to_train()'
 hint:
   type: 'single_use'
   display_name: 'Hint'

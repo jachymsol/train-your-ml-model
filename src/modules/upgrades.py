@@ -3,6 +3,7 @@ from kivy.lang.builder import Builder
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
+import utils.image_utils as image_utils
 from utils.yaml_utils import get_local_upgrade
 
 Builder.load_file("graphics/upgrades_frame.kv")
@@ -69,7 +70,7 @@ class SingleUseUpgrade(Widget):
             self.app_root.add_coins(-self.cost)
             self.ids.purchase_button.disabled = True
             self.ids.purchase_button.background_color = (0, 1, 0, 1)
-            # eval(self.callback)
+            eval(self.callback)
             Clock.schedule_once(self.enable_purchase, 1)
     
     def enable_purchase(self, _):
