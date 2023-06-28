@@ -42,13 +42,13 @@ def transform_and_display(image, canvas, transforms):
 
 def get_next_filename(dataset_path, category):
     folder_path = Path.expanduser(Path(dataset_path) / category)
-    current_filenames = [file.stem for file in folder_path.glob('train_*.png')]
+    current_filenames = [file.stem for file in folder_path.glob('tr_*.png')]
     file_numbers = [int(filename[-5:]) for filename in current_filenames]
     if len(file_numbers) > 0:
         last_number = max(file_numbers)
     else:
         last_number = -1
-    new_filename = f"train_{str(last_number+1).zfill(5)}.png"
+    new_filename = f"tr_{str(last_number+1).zfill(5)}.png"
     return folder_path / new_filename
 
 def load(image_path):
@@ -69,7 +69,7 @@ def copy(src_path, dst_path):
 
 def get_random_image_path(dataset):
     dataset_path = Path.expanduser(Path(get_config(f'{dataset}_folder')))
-    image_paths = list((dataset_path).rglob(f'{dataset}_*.png'))
+    image_paths = list((dataset_path).rglob(f'{dataset[:2]}_*.png'))
     return random.choice(image_paths)
 
 def test_to_train():
