@@ -40,23 +40,23 @@
         width: root.width
         pos: root.pos
         orientation: 'horizontal'
-        padding: 20, 5, 50, 5
-        Switch:
+        padding: self.width * 0.05, 5
+        spacing: self.width * 0.05
+        ToggleButton:
             id: active_switch
-            size_hint: None, 1
-            width: 250
             pos_hint: {'center_x': .5, 'center_y': .5}
             disabled: not root.is_purchased
-            on_touch_up: root.update_active_state()
+            on_release: root.update_active_state()
+            IconImage:
+                source: 'icons/toggle_on.png' if self.parent.state == 'down' else 'icons/toggle_off.png'
         Label:
-            text: root.display_name
+            size_hint: 3, 1
+            text: root.full_display_name
             text_size: self.size
             halign: 'left'
             valign: 'center'
         Button:
             id: purchase_button
-            size_hint: None, 1
-            width: 200
             on_release: root.purchase()
             IconImage:
                 source: 'icons/coin.png'
@@ -69,15 +69,15 @@
         width: root.width
         pos: root.pos
         orientation: 'horizontal'
-        padding: 50, 5
+        padding: self.width * 0.05, 5
+        spacing: self.width * 0.05
         Label:
+            size_hint: 4, 1
             text: root.display_name
             text_size: self.size
             halign: 'left'
             valign: 'center'
         Button:
             id: purchase_button
-            size_hint: None, 1
-            width: 200
             IconImage:
                 source: 'icons/coin.png'
