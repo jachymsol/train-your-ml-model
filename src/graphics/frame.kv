@@ -20,6 +20,7 @@
                 app_root: root
 
             TabbedPanelHeader:
+                id: tab_header
                 content: training_tab.__self__
                 IconImage:
                     source: 'icons/photo_library.png'
@@ -35,8 +36,8 @@
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
-            size: 180, 70
-            pos: root.width - 200, root.height - 80
+            size: root.ids.tab_header.width, root.ids.tab_header.height * 0.8
+            pos: root.width - self.width * 1.05, root.height - self.height * 1.25
             IconImage:
                 source: 'icons/coin.png'
             Label:
