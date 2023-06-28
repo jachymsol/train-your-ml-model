@@ -3,6 +3,7 @@ Kivy
 tensorflow==2.13.0rc1
 keras
 Pillow
+opencv-python
 scipy
 numpy
 matplotlib

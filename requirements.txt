@@ -229,12 +229,15 @@ numpy==1.25.0
     #   contourpy
     #   h5py
     #   matplotlib
+    #   opencv-python
     #   opt-einsum
     #   scipy
     #   tensorboard
     #   tensorflow-macos
 oauthlib==3.2.2
     # via requests-oauthlib
+opencv-python==4.7.0.72
+    # via -r requirements.in
 opt-einsum==3.3.0
     # via tensorflow-macos
 overrides==7.3.1
