@@ -24,6 +24,9 @@ class UploadImageFrame(Widget):
         Clock.schedule_interval(self.update_camera, 1.0 / 30)
 
     def update_camera(self, _):
+        if not self.camera.isOpened():
+            self.camera = camera_utils.create()
+        
         if self.camera.isOpened() and self.is_capturing:
             self.image = camera_utils.capture(self.camera)
         
