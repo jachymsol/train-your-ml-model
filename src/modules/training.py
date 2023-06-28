@@ -20,25 +20,36 @@ class UploadImageFrame(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.camera = camera_utils.create()
+        self.init_camera()
         Clock.schedule_interval(self.update_camera, 1.0 / 30)
+    
+    def init_camera(self):
+        self.camera = camera_utils.create()
+        self.is_capturing = True
 
     def update_camera(self, _):
-        if not self.camera.isOpened():
-            self.camera = camera_utils.create()
-        
-        if self.camera.isOpened() and self.is_capturing:
-            self.image = camera_utils.capture(self.camera)
-        
-        transforms = (self.app_root.state['active_upgrades'] 
-                      if self.app_root.state['show_transformations']
-                      else [])
-        image_utils.transform_and_display(self.image, self.ids.camera_image, transforms)
+        if self.is_capturing and self.camera.isOpened():
+            try:
+                self.image = camera_utils.capture(self.camera)
+
+                transforms = (self.app_root.state['active_upgrades'] 
+                            if self.app_root.state['show_transformations']
+                            else [])
+                image_utils.transform_and_display(self.image, self.ids.camera_image, transforms)
+            except EOFError:
+                self.break_camera()
+    
+    def break_camera(self):
+        self.is_capturing = False
+        camera_utils.destroy(self.camera)
+        self.camera = None
     
     def capture_image(self):
         self.is_capturing = False
 
     def retake_image(self):
+        if not self.camera:
+            self.init_camera()
         self.is_capturing = True
     
     def save_image(self):
