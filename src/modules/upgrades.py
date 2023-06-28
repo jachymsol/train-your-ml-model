@@ -30,16 +30,18 @@ class PurchasableUpgrade(Widget):
         self.upgrade_id = upgrade_id
         self.display_name = upgrade['display_name']
         self.abbreviation = upgrade['abbreviation']
-        self.full_display_name = f"({self.abbreviation}) {self.display_name}"
+        self.cost = upgrade['cost']
 
         self.app_root = app_root
     
     def purchase(self):
-        self.is_purchased = True
-        self.ids.purchase_row.remove_widget(self.ids.purchase_button)
-        self.ids.purchase_row.add_widget(Label(text=f"({self.abbreviation})", size_hint=(.5, 1)))
-        self.ids.active_switch.active = True
-        self.update_active_state()
+        if(self.app_root.state['coins'] >= self.cost):
+            self.app_root.add_coins(-self.cost)
+            self.is_purchased = True
+            self.ids.purchase_row.remove_widget(self.ids.purchase_button)
+            self.ids.purchase_row.add_widget(Label())
+            self.ids.active_switch.active = True
+            self.update_active_state()
 
     def update_active_state(self):
         if self.ids.active_switch.active:

@@ -21,8 +21,6 @@
                 size_hint: 1, None
                 height: 150
             OneTimeUpgrade:
-                display_name: "Evaluate a model on the Test dataset"
-            OneTimeUpgrade:
                 display_name: "Train data to Test dataset"
             OneTimeUpgrade:
                 display_name: "Test data to Train dataset"
@@ -33,6 +31,8 @@
                 
 <PurchasableUpgrade>:
     display_name: ""
+    abbreviation: ""
+    cost: 0
     size_hint: 1, None
     height: 100
     BoxLayout:
@@ -51,15 +51,25 @@
                 source: 'icons/toggle_on.png' if self.parent.state == 'down' else 'icons/toggle_off.png'
         Label:
             size_hint: 3, 1
-            text: root.full_display_name
+            text: f"({root.abbreviation}) {root.display_name}"
             text_size: self.size
             halign: 'left'
             valign: 'center'
         Button:
             id: purchase_button
             on_release: root.purchase()
-            IconImage:
-                source: 'icons/coin.png'
+            BoxLayout:
+                orientation: 'horizontal'
+                size: self.parent.size
+                pos: self.parent.pos
+                Label:
+                    text: str(root.cost)
+                    text_size: self.size
+                    valign: 'center'
+                    halign: 'right'
+                Widget:
+                    IconImage:
+                        source: 'icons/coin.png'
 
 <OneTimeUpgrade>:
     display_name: ""

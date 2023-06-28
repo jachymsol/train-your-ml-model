@@ -1,15 +1,20 @@
 resize:
   abbreviation: 'R'
   display_name: 'Resize to 32x32'
+  cost: 15
 grayscale:
   abbreviation: 'B'
   display_name: 'Grayscale'
+  cost: 20
 contrast:
   abbreviation: 'C'
   display_name: 'Max Contrast'
+  cost: 30
 image_generation:
   abbreviation: 'G'
   display_name: 'Image Generation'
+  cost: 50
 train_test_split:
   abbreviation: 'T'
   display_name: 'Train/Test Split'
+  cost: 30
