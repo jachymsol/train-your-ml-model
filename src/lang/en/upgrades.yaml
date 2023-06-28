@@ -1,20 +1,41 @@
 resize:
+  type: 'permanent'
   abbreviation: 'R'
   display_name: 'Resize to 32x32'
   cost: 15
 grayscale:
+  type: 'permanent'
   abbreviation: 'B'
   display_name: 'Grayscale'
   cost: 20
 contrast:
+  type: 'permanent'
   abbreviation: 'C'
   display_name: 'Max Contrast'
   cost: 30
 image_generation:
+  type: 'permanent'
   abbreviation: 'G'
   display_name: 'Image Generation'
   cost: 50
 train_test_split:
+  type: 'permanent'
   abbreviation: 'T'
   display_name: 'Train/Test Split'
   cost: 30
+
+train_to_test:
+  type: 'single_use'
+  display_name: 'Train data to Test dataset'
+  cost: 20
+  callback: 'image_utils.train_to_test()'
+test_to_train:
+  type: 'single_use'
+  display_name: 'Test data to Train dataset'
+  cost: 20
+  callback: 'image_utils.train_to_test()'
+hint:
+  type: 'single_use'
+  display_name: 'Hint'
+  cost: 10
+  callback: pass

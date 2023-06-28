@@ -14,19 +14,20 @@
                 height: 150
         VerticalSeparator:
         BoxLayout:
+            id: single_use_upgrades
             orientation: 'vertical'
             Label:
-                text: "One Time Upgrades"
+                text: "Single Use Upgrades"
                 bold: True
                 size_hint: 1, None
                 height: 150
-            OneTimeUpgrade:
-                display_name: "Train data to Test dataset"
-            OneTimeUpgrade:
-                display_name: "Test data to Train dataset"
-            OneTimeUpgrade:
-                display_name: "Hint"
-            Label:
+            # SingleUseUpgrade:
+            #     display_name: "Train data to Test dataset"
+            # SingleUseUpgrade:
+            #     display_name: "Test data to Train dataset"
+            # SingleUseUpgrade:
+            #     display_name: "Hint"
+            # Label:
         VerticalSeparator:
                 
 <PurchasableUpgrade>:
@@ -71,8 +72,9 @@
                     IconImage:
                         source: 'icons/coin.png'
 
-<OneTimeUpgrade>:
+<SingleUseUpgrade>:
     display_name: ""
+    cost: 0
     size_hint: 1, None
     height: 100
     BoxLayout:
@@ -89,5 +91,17 @@
             valign: 'center'
         Button:
             id: purchase_button
-            IconImage:
-                source: 'icons/coin.png'
+            on_release: root.purchase()
+            background_disabled_normal: self.background_normal
+            BoxLayout:
+                orientation: 'horizontal'
+                size: self.parent.size
+                pos: self.parent.pos
+                Label:
+                    text: str(root.cost)
+                    text_size: self.size
+                    valign: 'center'
+                    halign: 'right'
+                Widget:
+                    IconImage:
+                        source: 'icons/coin.png'
