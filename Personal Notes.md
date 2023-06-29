@@ -15,6 +15,4 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
-- fix crash when no training pictures
 - add more upgrades (in-life)
-- log purchased_upgrades
