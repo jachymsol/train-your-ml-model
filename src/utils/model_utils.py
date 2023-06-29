@@ -1,7 +1,10 @@
+import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from pathlib import Path
+from sklearn.utils import shuffle
 
+import utils.image_utils as image_utils
 from utils.config import get_config
 from utils.transformations import max_contrast_for_model
 
@@ -73,22 +76,42 @@ def create_generator(dataset_path, active_upgrades, is_test=False):
         subset='training'
     )
 
+def create_dataset_from_folder(dataset_path, active_upgrades, is_test=False):
+    categories = get_config('categories')
+    n_cats = range(len(categories))
+    filenames = [list((dataset_path / category).glob('*.png')) for category in categories]
+    image_arrays = np.array([image_utils.load(str(filename)) for i in n_cats for filename in filenames[i]])
+    image_labels = np.concatenate([np.zeros(len(filenames[0])), np.ones(len(filenames[1]))])
+    transformed_image_arrays = np.array([image_utils.transform(image, active_upgrades) for image in image_arrays])
+    rescaled_image_arrays = 1 - transformed_image_arrays * 1./255
+    x, y = shuffle(rescaled_image_arrays, image_labels)
+    if 'train_test_split' in active_upgrades:
+        offset = int(np.floor(len(x) * 0.8))
+        if is_test:
+            return x[offset:], y[offset:]
+        return x[:offset], y[:offset]
+    return x, y
+
 def create_train_and_evaluate(active_upgrades):
     model = create_model(active_upgrades)
+
     train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
-    train_generator = create_generator(train_dataset_path, active_upgrades)
-    test_generator = create_generator(train_dataset_path, active_upgrades, is_test=True)
-    history = model.fit(train_generator, epochs=10)
+    train_x, train_y = create_dataset_from_folder(train_dataset_path, active_upgrades)
+    test_x, test_y = [], []
+
+    history = model.fit(train_x, train_y, batch_size=32, epochs=10)
     test_accuracy = history.history['accuracy'][-1]
 
     if 'train_test_split' in active_upgrades:
-        test_results = model.evaluate(test_generator, return_dict=True)
+        test_x, test_y = create_dataset_from_folder(train_dataset_path, active_upgrades, is_test=True)
+
+        test_results = model.evaluate(test_x, test_y, return_dict=True)
         test_accuracy = test_results['accuracy']
 
     model_info = {
         'model': model,
         'active_upgrades': active_upgrades,
-        'samples': f"{train_generator.samples} + {test_generator.samples}",
+        'samples': f"{len(train_y)} + {len(test_y)}",
         'train_accuracy': test_accuracy,
         'test_accuracy': None
     }
@@ -96,7 +119,9 @@ def create_train_and_evaluate(active_upgrades):
 
 def test(model, active_upgrades):
     test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
-    test_generator = create_generator(test_dataset_path, active_upgrades)
+    active_upgrades_no_split = set(active_upgrades)
+    active_upgrades_no_split.discard('train_test_split')
+    test_x, test_y = create_dataset_from_folder(test_dataset_path, active_upgrades_no_split)
 
-    results = model.evaluate(test_generator, return_dict=True)
+    results = model.evaluate(test_x, test_y, return_dict=True)
     return results['accuracy']
