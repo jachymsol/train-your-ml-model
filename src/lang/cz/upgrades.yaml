@@ -1,15 +1,41 @@
 resize:
-    abbreviation: 'Z'
-    display_name: 'Zmensit na 32x32'
+  type: 'permanent'
+  abbreviation: 'Z'
+  display_name: 'Zmensit na 32x32'
+  cost: 15
 grayscale:
-    abbreviation: 'S'
-    display_name: 'Odstiny sede'
+  type: 'permanent'
+  abbreviation: 'S'
+  display_name: 'Odstiny sede'
+  cost: 20
 contrast:
-    abbreviation: 'K'
-    display_name: 'Zvysit kontrast'
+  type: 'permanent'
+  abbreviation: 'K'
+  display_name: 'Zvysit kontrast'
+  cost: 30
 image_generation:
-    abbreviation: 'G'
-    display_name: 'Vygenerovat podobne'
+  type: 'permanent'
+  abbreviation: 'G'
+  display_name: 'Vygenerovat podobne'
+  cost: 50
 train_test_split:
-    abbreviation: 'T'
-    display_name: 'Oddelit testovaci'
+  type: 'permanent'
+  abbreviation: 'T'
+  display_name: 'Oddelit testovaci'
+  cost: 30
+
+train_to_test:
+  type: 'single_use'
+  display_name: 'Nahodny obrazek z trenovacich dat do testovacich'
+  cost: 20
+  callback: 'image_utils.train_to_test()'
+test_to_train:
+  type: 'single_use'
+  display_name: 'Nahodny obrazek z testovacich dat do trenovacich'
+  cost: 20
+  callback: 'image_utils.test_to_train()'
+hint:
+  type: 'single_use'
+  display_name: 'Hint'
+  cost: 10
+  callback: pass
