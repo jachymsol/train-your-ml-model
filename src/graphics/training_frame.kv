@@ -1,4 +1,5 @@
 #: import config utils.config
+#: import Path pathlib.Path
 
 <TrainingDataTab>:
     app_root: None
@@ -94,7 +95,7 @@
             id: file_chooser
             dirselect: False
             filters: ['*.png']
-            rootpath: '../datasets'
+            rootpath: str(Path.expanduser(Path(config.get_config('train_folder'))))
 
     ToggleButton:
         size_hint: None, None
