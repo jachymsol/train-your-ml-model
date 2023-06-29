@@ -16,7 +16,7 @@ class EvaluationsTab(Widget):
         self.ids.evaluation_results.add_widget(evaluation_row)
 
         def create_model_and_display(_):
-            model = model_utils.create_train_and_evaluate(self.app_root.state['active_upgrades'])
+            model = model_utils.create_train_and_evaluate(self.app_root.state['active_upgrades'], self.app_root.state_folder)
             
             self.app_root.state['evaluations'].append(model)
             evaluation_row.loading = False
@@ -41,7 +41,7 @@ class EvaluationRow(Widget):
 
     def test_model(self, _):
         evaluation = self.app_root.state['evaluations'][self.model_index]
-        result = model_utils.test(evaluation['model'], evaluation['active_upgrades'])
+        result = model_utils.test(evaluation['model_path'], evaluation['active_upgrades'])
 
         self.app_root.state['evaluations'][self.model_index]['test_accuracy'] = result
         self.display_test_accuracy()

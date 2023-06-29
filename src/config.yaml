@@ -1,4 +1,8 @@
 language: 'en'
+
+state_folder: '~/Playground/ML/games'
+load_game: ''
+
 start_coins: 0
 train_folder: '~/Playground/ML/datasets/train'
 test_folder: '~/Playground/ML/datasets/test'

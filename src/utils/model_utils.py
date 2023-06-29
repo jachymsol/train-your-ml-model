@@ -32,6 +32,19 @@ def create_model(active_upgrades):
 
     return model
 
+def save_model(model, state_folder):
+    current_models = sorted(state_folder.glob('model_'))
+    file_numbers = [int(filename[-5:]) for filename in current_models]
+    if len(file_numbers) > 0:
+        last_number = max(file_numbers)
+    else:
+        last_number = -1
+
+    model_folder = state_folder / f"model_{str(last_number).zfill(5)}"
+    Path.mkdir(model_folder)
+    model.save(model_folder)
+    return Path.absolute(model_folder)
+
 def create_generator(dataset_path, active_upgrades, is_test=False):
     color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'rgb'
     target_size = (32, 32) if 'resize' in active_upgrades else (128, 128)
@@ -92,7 +105,7 @@ def create_dataset_from_folder(dataset_path, active_upgrades, is_test=False):
         return x[:offset], y[:offset]
     return x, y
 
-def create_train_and_evaluate(active_upgrades):
+def create_train_and_evaluate(active_upgrades, state_folder):
     model = create_model(active_upgrades)
 
     train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
@@ -109,7 +122,7 @@ def create_train_and_evaluate(active_upgrades):
         test_accuracy = test_results['accuracy']
 
     model_info = {
-        'model': model,
+        'model_path': save_model(model, state_folder),
         'active_upgrades': active_upgrades,
         'samples': f"{len(train_y)} + {len(test_y)}",
         'train_accuracy': test_accuracy,
@@ -117,7 +130,8 @@ def create_train_and_evaluate(active_upgrades):
     }
     return model_info
 
-def test(model, active_upgrades):
+def test(model_path, active_upgrades):
+    model = keras.models.load_model(model_path)
     test_dataset_path = Path.expanduser(Path(get_config('test_folder')))
     active_upgrades_no_split = set(active_upgrades)
     active_upgrades_no_split.discard('train_test_split')

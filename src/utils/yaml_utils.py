@@ -7,9 +7,13 @@ MODULE_ROOT = Path(__file__).parent.parent
 
 def read_yaml(file_name):
     with open(file_name, 'r') as file:
-        contents = yaml.safe_load(file)
+        data = yaml.safe_load(file)
     
-    return contents
+    return data
+
+def write_yaml(data, file_name):
+    with open(file_name, 'w') as file:
+        yaml.safe_dump(data, file)
 
 def get_local_text(file_name, text):
     return read_yaml(MODULE_ROOT / 'lang' / get_config('language') / file_name)[text]
