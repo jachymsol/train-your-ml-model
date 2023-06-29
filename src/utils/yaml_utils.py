@@ -1,6 +1,9 @@
+from pathlib import Path
 import yaml
 
 from utils.config import get_config
+
+MODULE_ROOT = Path(__file__).parent.parent
 
 def read_yaml(file_name):
     with open(file_name, 'r') as file:
@@ -9,10 +12,10 @@ def read_yaml(file_name):
     return contents
 
 def get_local_text(file_name, text):
-    return read_yaml(f"lang/{get_config('language')}/{file_name}")[text]
+    return read_yaml(MODULE_ROOT / 'lang' / get_config('language') / file_name)[text]
 
 def get_local_upgrade(upgrade_id=None):
     if upgrade_id:
-        return read_yaml(f"lang/{get_config('language')}/upgrades.yaml")[upgrade_id]
+        return read_yaml(MODULE_ROOT / 'lang' / get_config('language') / 'upgrades.yaml')[upgrade_id]
     else:
-        return read_yaml(f"lang/{get_config('language')}/upgrades.yaml")
+        return read_yaml(MODULE_ROOT / 'lang' / get_config('language') / 'upgrades.yaml')

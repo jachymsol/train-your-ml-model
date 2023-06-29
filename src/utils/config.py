@@ -1,6 +1,7 @@
+from pathlib import Path
 import yaml
 
-CONFIG_LOCATION = 'config.yaml'
+CONFIG_LOCATION = Path(__file__).parent.parent / 'config.yaml'
 
 def init_config():
     with open(CONFIG_LOCATION, 'r') as config_file:
