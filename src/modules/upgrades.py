@@ -9,17 +9,20 @@ from utils.yaml_utils import get_local_upgrade
 Builder.load_file("graphics/upgrades_frame.kv")
 
 class UpgradesTab(Widget):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        
     def on_kv_post(self, base_widget):
         upgrades = get_local_upgrade()
 
         for upgrade in upgrades:
             if upgrades[upgrade]['type'] == 'permanent':
-                self.ids.permanent_upgrades.add_widget(PurchasableUpgrade(upgrade, upgrades[upgrade], self.app_root))
+                widget = PurchasableUpgrade(upgrade, upgrades[upgrade], self.app_root)
+                self.ids.permanent_upgrades.add_widget(widget)
+                if upgrade in self.app_root.state['purchased_upgrades']:
+                    widget.set_to_purchased()
+
             elif upgrades[upgrade]['type'] == 'single_use':
-                self.ids.single_use_upgrades.add_widget(SingleUseUpgrade(upgrade, upgrades[upgrade], self.app_root))
+                widget = SingleUseUpgrade(upgrade, upgrades[upgrade], self.app_root)
+                self.ids.single_use_upgrades.add_widget(widget)
+
         self.ids.permanent_upgrades.add_widget(Widget())
         self.ids.single_use_upgrades.add_widget(Widget())
 
@@ -42,11 +45,14 @@ class PurchasableUpgrade(Widget):
     def purchase(self):
         if self.app_root.state['coins'] >= self.cost:
             self.app_root.add_coins(-self.cost)
-            self.is_purchased = True
-            self.ids.purchase_row.remove_widget(self.ids.purchase_button)
-            self.ids.purchase_row.add_widget(Widget())
-            self.ids.active_switch.state = 'down'
-            self.update_active_state()
+            self.set_to_purchased()
+    
+    def set_to_purchased(self):
+        self.is_purchased = True
+        self.ids.purchase_row.remove_widget(self.ids.purchase_button)
+        self.ids.purchase_row.add_widget(Widget())
+        self.ids.active_switch.state = 'down'
+        self.update_active_state()
 
     def update_active_state(self):
         if self.ids.active_switch.state == 'down':

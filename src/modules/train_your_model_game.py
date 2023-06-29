@@ -16,6 +16,7 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 INITIAL_STATE = {
     'language': get_config('language'),
     'coins': get_config('start_coins'),
+    'purchased_upgrades': set(),
     'active_upgrades': set(), # grayscale, resize, contrast, image_generation, train_test_split
     'show_transformations': True,
     'evaluations': []
@@ -27,7 +28,7 @@ class TrainYourModelGame(Widget):
     def __init__(self, **kwargs):
         load_game = get_config('load_game')
         if not load_game:
-            load_game = str(datetime.datetime.now())
+            load_game = str(datetime.datetime.now()).replace(':', '-')
         self.state_folder = Path.expanduser(Path(get_config('state_folder'))) / load_game
         Path.mkdir(self.state_folder, parents=False, exist_ok=True)
 
