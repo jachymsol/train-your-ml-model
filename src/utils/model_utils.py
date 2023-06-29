@@ -43,7 +43,7 @@ def save_model(model, state_folder):
     model_folder = state_folder / f"model_{str(last_number).zfill(5)}"
     Path.mkdir(model_folder)
     model.save(model_folder)
-    return Path.absolute(model_folder)
+    return str(model_folder)
 
 def create_generator(dataset_path, active_upgrades, is_test=False):
     color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'rgb'

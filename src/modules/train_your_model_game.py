@@ -28,7 +28,8 @@ class TrainYourModelGame(Widget):
         load_game = get_config('load_game')
         if not load_game:
             load_game = str(datetime.datetime.now())
-        self.state_folder = Path.mkdir(Path.expanduser(Path(get_config('state_folder'))) / load_game, parents=False, exist_ok=True)
+        self.state_folder = Path.expanduser(Path(get_config('state_folder'))) / load_game
+        Path.mkdir(self.state_folder, parents=False, exist_ok=True)
 
         if Path.exists(self.state_folder / 'state.yaml'):
             self.state = yaml_utils.read_yaml(self.state_folder / 'state.yaml')
