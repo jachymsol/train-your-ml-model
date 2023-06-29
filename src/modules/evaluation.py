@@ -10,6 +10,9 @@ Builder.load_file("graphics/evaluation_frame.kv")
 
 class EvaluationsTab(Widget):
     def new_evaluation(self):
+        if model_utils.is_train_dataset_empty():
+            return
+
         model_index = len(self.app_root.state['evaluations'])
         evaluation_row = EvaluationRow(app_root=self.app_root, model_index=model_index)
         self.ids.evaluation_results.height += evaluation_row.height

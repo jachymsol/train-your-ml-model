@@ -139,3 +139,9 @@ def test(model_path, active_upgrades):
 
     results = model.evaluate(test_x, test_y, return_dict=True)
     return results['accuracy']
+
+def is_train_dataset_empty():
+    train_dataset_path = Path.expanduser(Path(get_config('train_folder')))
+    house_paths = list((train_dataset_path / 'house').glob('*.png'))
+    tree_paths = list((train_dataset_path / 'tree').glob('*.png'))
+    return len(house_paths) == 0 or len(tree_paths) == 0
