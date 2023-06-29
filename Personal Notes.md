@@ -15,15 +15,6 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
-- fix text overflow with active upgrades in a model
-
-- brush up graphics
-
-- implement coins
+- fix crash when no training pictures
 - add more upgrades (in-life)
-
-- logging
-    - save state of app
-
-- one-time upgrades
-    - possibly server things
+- log purchased_upgrades
