@@ -54,6 +54,7 @@
     initialized: False
     loading: True
     model_index: None
+    test_cost: 10
     size_hint: 1, None
     height: 70
     BoxLayout:
@@ -69,6 +70,17 @@
         Label:
             text: "In progress..." if root.loading else root.get_accuracy()
         Button:
-            id: test_button
-            text: "Test"
-            on_press: root.test_model()
+            id: purchase_test_button
+            on_release: root.purchase_test_model()
+            BoxLayout:
+                orientation: 'horizontal'
+                size: self.parent.size
+                pos: self.parent.pos
+                Label:
+                    text: str(root.test_cost)
+                    text_size: self.size
+                    valign: 'center'
+                    halign: 'right'
+                Widget:
+                    IconImage:
+                        source: 'icons/coin.png'

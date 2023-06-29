@@ -32,7 +32,14 @@ class EvaluationRow(Widget):
         self.model_index = model_index
         self.initialized = True
     
-    def test_model(self):
+    def purchase_test_model(self):
+        if(self.app_root.state['coins'] >= self.test_cost):
+            self.app_root.add_coins(-self.test_cost)
+            self.ids.purchase_test_button.background_color = (0, 1, 0, 1)
+
+            Clock.schedule_once(self.test_model)
+
+    def test_model(self, _):
         evaluation = self.app_root.state['evaluations'][self.model_index]
         result = model_utils.test(evaluation['model'], evaluation['active_upgrades'])
 
@@ -40,7 +47,7 @@ class EvaluationRow(Widget):
         self.display_test_accuracy()
         
     def display_test_accuracy(self):
-        self.children[0].remove_widget(self.ids.test_button)
+        self.children[0].remove_widget(self.ids.purchase_test_button)
         self.children[0].add_widget(Label(text=self.get_accuracy(test=True)))
     
     def get_active_upgrades(self):
