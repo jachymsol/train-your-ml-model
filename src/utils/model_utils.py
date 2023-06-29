@@ -30,7 +30,7 @@ def create_model(active_upgrades):
     return model
 
 def create_generator(dataset_path, active_upgrades, is_test=False):
-    color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'bgr'
+    color_mode = 'grayscale' if 'grayscale' in active_upgrades else 'rgb'
     target_size = (32, 32) if 'resize' in active_upgrades else (128, 128)
     preprocessing_function = max_contrast_for_model if 'contrast' in active_upgrades else None
     validation_split = 0.2 if 'train_test_split' in active_upgrades else 0
@@ -39,11 +39,11 @@ def create_generator(dataset_path, active_upgrades, is_test=False):
         datagen = keras.preprocessing.image.ImageDataGenerator(
             rescale=1./255,
             preprocessing_function=preprocessing_function,
-            rotation_range=20,
+            rotation_range=10,
             width_shift_range=0.1,
             height_shift_range=0.1,
-            shear_range=0.2,
-            zoom_range=0.2,
+            shear_range=0.1,
+            zoom_range=0.1,
             horizontal_flip=True,
             validation_split=validation_split
         )
