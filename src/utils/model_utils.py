@@ -6,7 +6,7 @@ from sklearn.utils import shuffle
 
 import utils.image_utils as image_utils
 from utils.config import get_config
-from utils.transformations import max_contrast_for_model
+from utils.transformations import max_contrast_for_model, generate_images
 
 def create_model(active_upgrades):
     size = 32 if 'resize' in active_upgrades else 128
@@ -33,14 +33,14 @@ def create_model(active_upgrades):
     return model
 
 def save_model(model, state_folder):
-    current_models = sorted(state_folder.glob('model_'))
+    current_models = [file.stem for file in state_folder.glob('model_*')]
     file_numbers = [int(filename[-5:]) for filename in current_models]
     if len(file_numbers) > 0:
         last_number = max(file_numbers)
     else:
         last_number = -1
 
-    model_folder = state_folder / f"model_{str(last_number).zfill(5)}"
+    model_folder = state_folder / f"model_{str(last_number+1).zfill(5)}"
     Path.mkdir(model_folder)
     model.save(model_folder)
     return str(model_folder)
@@ -94,7 +94,14 @@ def create_dataset_from_folder(dataset_path, active_upgrades, is_test=False):
     n_cats = range(len(categories))
     filenames = [list((dataset_path / category).glob('*.png')) for category in categories]
     image_arrays = np.array([image_utils.load(str(filename)) for i in n_cats for filename in filenames[i]])
-    image_labels = np.concatenate([np.zeros(len(filenames[0])), np.ones(len(filenames[1]))])
+    multiplier = 1
+
+    if 'generate_images' in active_upgrades:
+        generated_image_arrays = np.array([generate_images(image_array) for image_array in image_arrays])
+        image_arrays = np.concatenate(generated_image_arrays)
+        multiplier = 9
+
+    image_labels = np.concatenate([np.zeros(len(filenames[0]) * multiplier), np.ones(len(filenames[1]) * multiplier)])
     transformed_image_arrays = np.array([image_utils.transform(image, active_upgrades) for image in image_arrays])
     rescaled_image_arrays = 1 - transformed_image_arrays * 1./255
     x, y = shuffle(rescaled_image_arrays, image_labels)

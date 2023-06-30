@@ -38,6 +38,44 @@ def max_contrast_for_model(image_array):
     new_image = max_contrast(old_image)
     return add_dimension(as_float_array(new_image))
 
+# Image Generation
+def move_image_down(image_array):
+    move_by_pixels = image_array.shape[0] // 10
+    addition_size = list(image_array.shape)
+    addition_size[0] = move_by_pixels
+    return np.concatenate((np.ones(addition_size, dtype='uint8') * 255, image_array[:-move_by_pixels, :, :]), axis=0)
+
+def move_image_up(image_array):
+    move_by_pixels = image_array.shape[0] // 10
+    addition_size = list(image_array.shape)
+    addition_size[0] = move_by_pixels
+    return np.concatenate((image_array[move_by_pixels:, :, :], np.ones(addition_size, dtype='uint8') * 255), axis=0)
+
+def move_image_left(image_array):
+    move_by_pixels = image_array.shape[1] // 10
+    addition_size = list(image_array.shape)
+    addition_size[1] = move_by_pixels
+    return np.concatenate((image_array[:, move_by_pixels:, :], np.ones(addition_size, dtype='uint8') * 255), axis=1)
+
+def move_image_right(image_array):
+    move_by_pixels = image_array.shape[1] // 10
+    addition_size = list(image_array.shape)
+    addition_size[1] = move_by_pixels
+    return np.concatenate((np.ones(addition_size, dtype='uint8') * 255, image_array[:, :-move_by_pixels, :]), axis=1)
+
+def generate_images(image_array):
+    return np.array([
+        move_image_up(move_image_left(image_array)),
+        move_image_up(image_array),
+        move_image_up(move_image_right(image_array)),
+        move_image_left(image_array),
+        image_array,
+        move_image_right(image_array),
+        move_image_down(move_image_left(image_array)),
+        move_image_down(image_array),
+        move_image_down(move_image_right(image_array))
+    ])
+
 # Composing
 def do_transforms(image_array, *transforms):
     image = as_image(image_array)
