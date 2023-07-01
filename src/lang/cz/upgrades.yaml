@@ -1,41 +1,45 @@
 resize:
   type: 'permanent'
   abbreviation: 'Z'
-  display_name: 'Zmensit na 32x32'
+  display_name: 'Zmenšit obrázky na 32x32'
   cost: 15
 grayscale:
   type: 'permanent'
   abbreviation: 'S'
-  display_name: 'Odstiny sede'
+  display_name: 'Přepnout obrázky na odstíny šedé'
   cost: 20
 contrast:
   type: 'permanent'
   abbreviation: 'K'
-  display_name: 'Zvysit kontrast'
+  display_name: 'Zvýšit kontrast obrázků na max'
   cost: 30
 image_generation:
   type: 'permanent'
   abbreviation: 'G'
-  display_name: 'Vygenerovat podobne'
+  display_name: 'Vygenerovat podobné obrázky při tréninku'
   cost: 50
 train_test_split:
   type: 'permanent'
   abbreviation: 'T'
-  display_name: 'Oddelit testovaci'
+  display_name: 'Oddělit validační obrázky při trénování'
   cost: 30
 
 train_to_test:
   type: 'single_use'
   display_name: 'Nahodny obrazek z trenovacich dat do testovacich'
-  cost: 20
+  cost: 6
   callback: 'image_utils.train_to_test()'
 test_to_train:
   type: 'single_use'
   display_name: 'Nahodny obrazek z testovacich dat do trenovacich'
-  cost: 20
+  cost: 8
   callback: 'image_utils.test_to_train()'
-hint:
+five_papers:
   type: 'single_use'
-  display_name: 'Hint'
-  cost: 10
+  display_name: 'Přines 5 papírku najednou'
+  cost: 5
   callback: pass
+five_pencils:
+  type: 'single_use'
+  display_name: 'Nakresli obrázek na 5 papírků najednou'
+  cost: 5
