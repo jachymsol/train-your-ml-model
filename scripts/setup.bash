@@ -1,4 +1,4 @@
-cp example_config.yaml config.yaml
+cp src/example_config.yaml src/config.yaml
 
 mkdir -p games
 mkdir -p datasets/train/house
