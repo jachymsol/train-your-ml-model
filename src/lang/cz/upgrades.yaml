@@ -43,3 +43,7 @@ five_pencils:
   type: 'single_use'
   display_name: 'Nakresli obrázek na 5 papírků najednou'
   cost: 5
+single_use:
+  type: 'single_use'
+  display_name: 'Stavební materiál'
+  cost: 10
