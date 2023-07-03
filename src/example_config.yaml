@@ -1,0 +1,11 @@
+language: 'en'
+
+state_folder: 'root/games'
+load_game: ''
+
+start_coins: 0
+train_folder: 'root/datasets/train'
+test_folder: 'root/datasets/test'
+categories:
+  - "house"
+  - "tree"
