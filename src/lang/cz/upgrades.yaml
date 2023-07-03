@@ -23,6 +23,11 @@ train_test_split:
   abbreviation: 'T'
   display_name: 'Oddělit validační obrázky při trénování'
   cost: 30
+double_capacity:
+  type: 'permanent'
+  abbreviation: 'D'
+  display_name: 'Můžeš vždy nosit 2 papírky zároveň'
+  cost: 40
 
 train_to_test:
   type: 'single_use'
@@ -36,7 +41,7 @@ test_to_train:
   callback: 'image_utils.test_to_train()'
 five_papers:
   type: 'single_use'
-  display_name: 'Přines 5 papírku najednou'
+  display_name: 'Přines 5 papírků najednou'
   cost: 5
   callback: pass
 five_pencils:
