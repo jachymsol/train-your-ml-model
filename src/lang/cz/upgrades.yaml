@@ -2,32 +2,32 @@ resize:
   type: 'permanent'
   abbreviation: 'Z'
   display_name: 'Zmenšit obrázky na 32x32'
-  cost: 15
+  cost: 10
 grayscale:
   type: 'permanent'
   abbreviation: 'S'
   display_name: 'Přepnout obrázky na odstíny šedé'
-  cost: 20
+  cost: 12
 contrast:
   type: 'permanent'
   abbreviation: 'K'
   display_name: 'Zvýšit kontrast obrázků na max'
-  cost: 30
+  cost: 20
 image_generation:
   type: 'permanent'
   abbreviation: 'G'
   display_name: 'Vygenerovat podobné obrázky při tréninku'
-  cost: 50
+  cost: 30
 train_test_split:
   type: 'permanent'
   abbreviation: 'T'
   display_name: 'Oddělit validační obrázky při trénování'
-  cost: 30
+  cost: 15
 double_capacity:
   type: 'permanent'
   abbreviation: 'D'
   display_name: 'Můžeš vždy nosit 2 papírky zároveň'
-  cost: 40
+  cost: 25
 
 train_to_test:
   type: 'single_use'
