@@ -31,12 +31,12 @@ double_capacity:
 
 train_to_test:
   type: 'single_use'
-  display_name: 'Nahodny obrazek z trenovacich dat do testovacich'
+  display_name: 'Nahodný obrázek z trénovacich dat do testovacích'
   cost: 6
   callback: 'image_utils.train_to_test()'
 test_to_train:
   type: 'single_use'
-  display_name: 'Nahodny obrazek z testovacich dat do trenovacich'
+  display_name: 'Nahodný obrázek z testovacích dat do trenovacích'
   cost: 8
   callback: 'image_utils.test_to_train()'
 five_papers:
@@ -48,7 +48,9 @@ five_pencils:
   type: 'single_use'
   display_name: 'Nakresli obrázek na 5 papírků najednou'
   cost: 5
+  callback: pass
 single_use:
   type: 'single_use'
   display_name: 'Stavební materiál'
   cost: 10
+  callback: pass
