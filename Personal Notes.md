@@ -15,4 +15,10 @@ Use Keras's ImageDataGenerator??
 
 ## ToDoS
 
-- add more upgrades (in-life)
+- fix bug with deleting images with the same name
+- handle errors when camera breaks
+- fix logging state when the program breaks
+- implement better logging
+- fix loading game from load state
+
+- implement predictor on images
